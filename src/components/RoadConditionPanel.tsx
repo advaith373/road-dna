@@ -23,8 +23,8 @@ export const RoadConditionPanel: React.FC = () => {
 
   return (
     <div style={{
-      background: '#111118',
-      border: '1px solid rgba(255,255,255,0.06)',
+      background: '#181A1D',
+      border: '1px solid rgba(231,229,223,0.08)',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
@@ -33,7 +33,7 @@ export const RoadConditionPanel: React.FC = () => {
       {/* Header */}
       <div style={{
         padding: '8px 12px',
-        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        borderBottom: '1px solid rgba(231,229,223,0.07)',
         flexShrink: 0,
       }}>
         <span className="section-header">ROAD CONDITION</span>
@@ -49,7 +49,7 @@ export const RoadConditionPanel: React.FC = () => {
               <path
                 d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
                 fill="none"
-                stroke="rgba(255,255,255,0.06)"
+                stroke="rgba(231,229,223,0.08)"
                 strokeWidth={4}
               />
               {/* Value arc */}
@@ -66,7 +66,7 @@ export const RoadConditionPanel: React.FC = () => {
               <text x={cx} y={cy - 2} textAnchor="middle" fill={qualColor} fontSize={11} fontFamily="JetBrains Mono" fontWeight="700">
                 {Math.round(road.quality)}
               </text>
-              <text x={cx} y={cy + 10} textAnchor="middle" fill="#5a5a72" fontSize={7} fontFamily="JetBrains Mono">
+              <text x={cx} y={cy + 10} textAnchor="middle" fill="#73787D" fontSize={7} fontFamily="JetBrains Mono">
                 /100
               </text>
             </svg>
@@ -74,13 +74,13 @@ export const RoadConditionPanel: React.FC = () => {
 
           <div style={{ flex: 1 }}>
             <div style={{ marginBottom: 6 }}>
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#5a5a72', letterSpacing: '0.08em', marginBottom: 2 }}>SURFACE</div>
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#e0e0e8', fontWeight: 600, letterSpacing: '0.06em' }}>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#73787D', letterSpacing: '0.08em', marginBottom: 2 }}>SURFACE</div>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#E7E5DF', fontWeight: 600, letterSpacing: '0.06em' }}>
                 {road.surface.toUpperCase()}
               </div>
             </div>
             <div>
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#5a5a72', letterSpacing: '0.08em', marginBottom: 2 }}>ROUGHNESS</div>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#73787D', letterSpacing: '0.08em', marginBottom: 2 }}>ROUGHNESS</div>
               <div style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: roughColor, fontWeight: 600, letterSpacing: '0.06em' }}>
                 {road.roughness.toUpperCase()}
               </div>
@@ -91,9 +91,9 @@ export const RoadConditionPanel: React.FC = () => {
         {/* Roughness bar */}
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#5a5a72', letterSpacing: '0.08em' }}>ROAD ROUGHNESS INDEX</span>
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#73787D', letterSpacing: '0.08em' }}>ROAD ROUGHNESS INDEX</span>
           </div>
-          <div style={{ height: 4, background: 'rgba(255,255,255,0.05)' }}>
+          <div style={{ height: 4, background: 'rgba(231,229,223,0.07)' }}>
             <div style={{
               height: '100%',
               width: `${['smooth', 'low', 'medium', 'high', 'severe'].indexOf(road.roughness) / 4 * 100}%`,
@@ -110,7 +110,7 @@ export const RoadConditionPanel: React.FC = () => {
 
         {/* Detected features */}
         <div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#5a5a72', letterSpacing: '0.08em', marginBottom: 6 }}>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#73787D', letterSpacing: '0.08em', marginBottom: 6 }}>
             DETECTED FEATURES
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -120,19 +120,19 @@ export const RoadConditionPanel: React.FC = () => {
                 alignItems: 'center',
                 gap: 6,
                 padding: '3px 6px',
-                background: f.type === 'pothole' ? 'rgba(255,61,61,0.06)' : 'rgba(255,255,255,0.02)',
-                border: `1px solid ${f.type === 'pothole' ? 'rgba(255,61,61,0.15)' : 'rgba(255,255,255,0.04)'}`,
+                background: f.type === 'pothole' ? 'rgba(184,74,66,0.06)' : 'rgba(231,229,223,0.025)',
+                border: `1px solid ${f.type === 'pothole' ? 'rgba(184,74,66,0.15)' : 'rgba(255,255,255,0.04)'}`,
               }}>
                 {f.type === 'pothole' ? (
-                  <AlertTriangle size={10} color="#ff9800" />
+                  <AlertTriangle size={10} color="#C56A35" />
                 ) : (
-                  <CheckCircle size={10} color="#00e676" />
+                  <CheckCircle size={10} color="#718B5A" />
                 )}
-                <span style={{ fontFamily: 'Inter', fontSize: 10, color: f.type === 'pothole' ? '#ff9800' : '#6a6a82', flex: 1 }}>
+                <span style={{ fontFamily: 'Inter', fontSize: 10, color: f.type === 'pothole' ? '#C56A35' : '#7B8085', flex: 1 }}>
                   {f.label}
                 </span>
                 {f.distance > 0 && (
-                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#5a5a72' }}>
+                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#73787D' }}>
                     {f.distance.toFixed(1)}m
                   </span>
                 )}

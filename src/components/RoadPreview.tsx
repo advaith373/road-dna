@@ -113,7 +113,7 @@ const PotholeMarker: React.FC<{ distance: number }> = ({ distance }) => {
   return (
     <mesh ref={meshRef} position={[0, 0.05, zPos]} rotation={[-Math.PI / 2, 0, 0]}>
       <ringGeometry args={[0.6, 1.0, 24]} />
-      <meshBasicMaterial color="#ff3d3d" transparent opacity={0.7} side={THREE.DoubleSide} />
+      <meshBasicMaterial color="#B84A42" transparent opacity={0.7} side={THREE.DoubleSide} />
     </mesh>
   );
 };
@@ -141,10 +141,10 @@ const Motorcycle: React.FC = () => {
         </mesh>
       ))}
       {/* Headlight glow */}
-      <pointLight position={[0, 0.3, -0.5]} color="#00e5ff" intensity={2} distance={8} />
+      <pointLight position={[0, 0.3, -0.5]} color="#D59A32" intensity={2} distance={8} />
       <mesh position={[0, 0.3, -0.5]}>
         <sphereGeometry args={[0.06, 8, 8]} />
-        <meshBasicMaterial color="#00e5ff" />
+        <meshBasicMaterial color="#D59A32" />
       </mesh>
     </group>
   );
@@ -162,10 +162,10 @@ const Scene: React.FC<RoadMeshProps> = (props) => {
     <>
       {/* Ambient + directional lighting */}
       <ambientLight intensity={0.3} color="#1a1a2e" />
-      <directionalLight position={[0, 10, -5]} intensity={0.5} color="#4a9eff" />
+      <directionalLight position={[0, 10, -5]} intensity={0.5} color="#6F8792" />
       <directionalLight position={[5, 5, 5]} intensity={0.3} color="#ffffff" />
       {/* Fog for depth */}
-      <fog attach="fog" args={['#09090f', 25, 55]} />
+      <fog attach="fog" args={['#111214', 25, 55]} />
       {/* Road */}
       <RoadMesh {...props} />
       <LaneMarkings speed={props.speed} />
@@ -185,7 +185,7 @@ const Scene: React.FC<RoadMeshProps> = (props) => {
       {[-4, 4].map((x) => (
         <mesh key={x} position={[x, 0.3, -20]}>
           <boxGeometry args={[0.5, 0.6, 40]} />
-          <meshStandardMaterial color="#111118" roughness={0.9} />
+          <meshStandardMaterial color="#181A1D" roughness={0.9} />
         </mesh>
       ))}
     </>
@@ -201,8 +201,8 @@ export const RoadPreview: React.FC = () => {
       position: 'relative',
       width: '100%',
       height: '100%',
-      background: '#09090f',
-      border: '1px solid rgba(0,229,255,0.15)',
+      background: '#111214',
+      border: '1px solid rgba(213,154,50,0.15)',
       overflow: 'hidden',
     }}>
       {/* Panel header */}
@@ -218,16 +218,16 @@ export const RoadPreview: React.FC = () => {
         borderBottom: '1px solid rgba(255,255,255,0.04)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 6, height: 6, background: '#00e5ff', boxShadow: '0 0 6px #00e5ff' }} />
-          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.12em', color: '#6a6a82', fontWeight: 600 }}>
+          <div style={{ width: 6, height: 6, background: '#D59A32', boxShadow: '0 0 6px #D59A32' }} />
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.12em', color: '#7B8085', fontWeight: 600 }}>
             ROAD PREVIEW — 50m SCAN
           </span>
         </div>
         <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#5a5a72' }}>
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#73787D' }}>
             {gps.speed.toFixed(1)} km/h
           </span>
-          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#5a5a72' }}>
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#73787D' }}>
             HEADING {Math.round(gps.heading)}°
           </span>
         </div>
@@ -236,7 +236,7 @@ export const RoadPreview: React.FC = () => {
       {/* 3D Canvas */}
       <Canvas
         gl={{ antialias: true, alpha: false }}
-        style={{ width: '100%', height: '100%', background: '#09090f' }}
+        style={{ width: '100%', height: '100%', background: '#111214' }}
         dpr={[1, 1.5]}
       >
         <Scene
@@ -255,25 +255,25 @@ export const RoadPreview: React.FC = () => {
           right: 16,
           transform: 'translateY(-50%)',
           padding: '10px 14px',
-          background: 'rgba(255,61,61,0.1)',
-          border: '1px solid rgba(255,61,61,0.5)',
+          background: 'rgba(184,74,66,0.1)',
+          border: '1px solid rgba(184,74,66,0.5)',
           animation: 'danger-pulse 1s ease-in-out infinite',
           zIndex: 10,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
-            <AlertTriangle size={12} color="#ff3d3d" />
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#ff3d3d', fontWeight: 700, letterSpacing: '0.1em' }}>
+            <AlertTriangle size={12} color="#B84A42" />
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#B84A42', fontWeight: 700, letterSpacing: '0.1em' }}>
               POTHOLE DETECTED
             </span>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#ff6060' }}>
-              DIST: <span style={{ color: '#ff3d3d', fontWeight: 700 }}>{road.potholeDistance.toFixed(1)} m</span>
+              DIST: <span style={{ color: '#B84A42', fontWeight: 700 }}>{road.potholeDistance.toFixed(1)} m</span>
             </div>
             <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#ff6060' }}>
-              ETA: <span style={{ color: '#ff3d3d', fontWeight: 700 }}>{road.potholeEta.toFixed(1)} s</span>
+              ETA: <span style={{ color: '#B84A42', fontWeight: 700 }}>{road.potholeEta.toFixed(1)} s</span>
             </div>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#ff9800', marginTop: 3, letterSpacing: '0.06em' }}>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#C56A35', marginTop: 3, letterSpacing: '0.06em' }}>
               ↑ DAMPING +18%
             </div>
           </div>
@@ -285,7 +285,7 @@ export const RoadPreview: React.FC = () => {
         position: 'absolute',
         bottom: 0, left: 0, right: 0,
         height: 80,
-        background: 'linear-gradient(to top, rgba(0,229,255,0.04), transparent)',
+        background: 'linear-gradient(to top, rgba(213,154,50,0.04), transparent)',
         pointerEvents: 'none',
       }} />
 
@@ -305,8 +305,8 @@ export const RoadPreview: React.FC = () => {
           { label: 'QUALITY', value: `${road.quality}/100` },
         ].map((item) => (
           <div key={item.label} style={{ textAlign: 'center' }}>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#5a5a72', letterSpacing: '0.1em' }}>{item.label}</div>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#9090a8', fontWeight: 600 }}>{item.value}</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#73787D', letterSpacing: '0.1em' }}>{item.label}</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#92979D', fontWeight: 600 }}>{item.value}</div>
           </div>
         ))}
       </div>

@@ -28,23 +28,23 @@ export const SystemLog: React.FC = () => {
   const getLevelBadge = (level: LogEntry['level']) => {
     switch (level) {
       case 'system':
-        return { color: '#00e5ff', bg: 'rgba(0,229,255,0.12)', border: 'rgba(0,229,255,0.25)', label: 'SYS' };
+        return { color: '#D59A32', bg: 'rgba(213,154,50,0.12)', border: 'rgba(213,154,50,0.25)', label: 'SYS' };
       case 'success':
-        return { color: '#00e676', bg: 'rgba(0,230,118,0.12)', border: 'rgba(0,230,118,0.25)', label: 'OK ' };
+        return { color: '#718B5A', bg: 'rgba(113,139,90,0.12)', border: 'rgba(113,139,90,0.25)', label: 'OK ' };
       case 'warning':
-        return { color: '#ff9800', bg: 'rgba(255,152,0,0.12)', border: 'rgba(255,152,0,0.25)', label: 'WRN' };
+        return { color: '#C56A35', bg: 'rgba(197,106,53,0.12)', border: 'rgba(197,106,53,0.25)', label: 'WRN' };
       case 'error':
-        return { color: '#ff3d3d', bg: 'rgba(255,61,61,0.15)', border: 'rgba(255,61,61,0.3)', label: 'ERR' };
+        return { color: '#B84A42', bg: 'rgba(184,74,66,0.15)', border: 'rgba(184,74,66,0.3)', label: 'ERR' };
       case 'info':
       default:
-        return { color: '#9090a8', bg: 'rgba(255,255,255,0.05)', border: 'rgba(255,255,255,0.08)', label: 'INF' };
+        return { color: '#92979D', bg: 'rgba(231,229,223,0.07)', border: 'rgba(231,229,223,0.11)', label: 'INF' };
     }
   };
 
   return (
     <div style={{
-      background: '#0a0a10',
-      border: '1px solid rgba(255,255,255,0.06)',
+      background: '#141619',
+      border: '1px solid rgba(231,229,223,0.08)',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
@@ -55,7 +55,7 @@ export const SystemLog: React.FC = () => {
       <div style={{
         padding: '6px 12px',
         background: '#0d0d14',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        borderBottom: '1px solid rgba(231,229,223,0.08)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -64,12 +64,12 @@ export const SystemLog: React.FC = () => {
         flexShrink: 0,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <Terminal size={12} color="#00e5ff" />
+          <Terminal size={12} color="#D59A32" />
           <span className="section-header">SYSTEM EVENT LOG & DIAGNOSTICS</span>
           <span style={{
             fontFamily: 'JetBrains Mono',
             fontSize: 9,
-            color: '#5a5a72',
+            color: '#73787D',
           }}>
             [{filteredLogs.length} events]
           </span>
@@ -82,12 +82,12 @@ export const SystemLog: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             gap: 4,
-            background: '#07070c',
-            border: '1px solid rgba(255,255,255,0.08)',
+            background: '#111214',
+            border: '1px solid rgba(231,229,223,0.11)',
             padding: '2px 6px',
             borderRadius: 2,
           }}>
-            <Search size={10} color="#5a5a72" />
+            <Search size={10} color="#73787D" />
             <input
               type="text"
               placeholder="FILTER LOGS..."
@@ -97,7 +97,7 @@ export const SystemLog: React.FC = () => {
                 background: 'transparent',
                 border: 'none',
                 outline: 'none',
-                color: '#e0e0e8',
+                color: '#E7E5DF',
                 fontFamily: 'JetBrains Mono',
                 fontSize: 9,
                 width: 100,
@@ -110,9 +110,9 @@ export const SystemLog: React.FC = () => {
             value={filterLevel}
             onChange={(e) => setFilterLevel(e.target.value)}
             style={{
-              background: '#07070c',
-              border: '1px solid rgba(255,255,255,0.08)',
-              color: '#00e5ff',
+              background: '#111214',
+              border: '1px solid rgba(231,229,223,0.11)',
+              color: '#D59A32',
               fontFamily: 'JetBrains Mono',
               fontSize: 9,
               padding: '2px 4px',
@@ -134,9 +134,9 @@ export const SystemLog: React.FC = () => {
             onClick={() => setAutoScroll(!autoScroll)}
             title={autoScroll ? 'Auto-scroll enabled' : 'Auto-scroll paused'}
             style={{
-              background: autoScroll ? 'rgba(0,229,255,0.12)' : '#07070c',
-              border: autoScroll ? '1px solid #00e5ff' : '1px solid rgba(255,255,255,0.08)',
-              color: autoScroll ? '#00e5ff' : '#5a5a72',
+              background: autoScroll ? 'rgba(213,154,50,0.12)' : '#111214',
+              border: autoScroll ? '1px solid #D59A32' : '1px solid rgba(231,229,223,0.11)',
+              color: autoScroll ? '#D59A32' : '#73787D',
               padding: '2px 6px',
               borderRadius: 2,
               cursor: 'pointer',
@@ -186,11 +186,11 @@ export const SystemLog: React.FC = () => {
                   padding: '2px 4px',
                   borderRadius: 2,
                   transition: 'background 0.1s ease',
-                  background: entry.level === 'warning' ? 'rgba(255,152,0,0.03)' : entry.level === 'error' ? 'rgba(255,61,61,0.05)' : 'transparent',
+                  background: entry.level === 'warning' ? 'rgba(197,106,53,0.03)' : entry.level === 'error' ? 'rgba(184,74,66,0.05)' : 'transparent',
                 }}
               >
                 {/* Timestamp */}
-                <span style={{ color: '#5a5a72', fontSize: 9, flexShrink: 0 }}>
+                <span style={{ color: '#73787D', fontSize: 9, flexShrink: 0 }}>
                   {entry.timestamp}
                 </span>
 
@@ -213,7 +213,7 @@ export const SystemLog: React.FC = () => {
                 {/* Message */}
                 <span
                   style={{
-                    color: entry.level === 'warning' ? '#ffb74d' : entry.level === 'error' ? '#ff6b6b' : entry.level === 'system' ? '#00e5ff' : '#c0c0d0',
+                    color: entry.level === 'warning' ? '#ffb74d' : entry.level === 'error' ? '#ff6b6b' : entry.level === 'system' ? '#D59A32' : '#c0c0d0',
                     wordBreak: 'break-all',
                     flex: 1,
                   }}
@@ -229,7 +229,7 @@ export const SystemLog: React.FC = () => {
       {/* Terminal Footer Bar */}
       <div style={{
         padding: '4px 12px',
-        background: '#07070c',
+        background: '#111214',
         borderTop: '1px solid rgba(255,255,255,0.04)',
         display: 'flex',
         justifyContent: 'space-between',
@@ -237,7 +237,7 @@ export const SystemLog: React.FC = () => {
         flexShrink: 0,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#00e5ff', animation: 'status-pulse 1s infinite' }} />
+          <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#D59A32', animation: 'status-pulse 1s infinite' }} />
           <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#3a3a52' }}>STREAM READY — LOG_BUFFER ACTIVE</span>
         </div>
         <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#3a3a52' }}>

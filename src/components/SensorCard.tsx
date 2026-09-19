@@ -20,7 +20,7 @@ interface SensorCardProps {
 }
 
 export const SensorCard: React.FC<SensorCardProps> = ({
-  title, icon, status, fields, detailFields, accent = '#00e5ff'
+  title, icon, status, fields, detailFields, accent = '#D59A32'
 }) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -29,8 +29,8 @@ export const SensorCard: React.FC<SensorCardProps> = ({
       <div
         onClick={() => setExpanded(true)}
         style={{
-          background: '#0f0f16',
-          border: '1px solid rgba(255,255,255,0.06)',
+          background: '#202327',
+          border: '1px solid rgba(231,229,223,0.08)',
           padding: '10px 12px',
           cursor: 'pointer',
           transition: 'border-color 0.2s, background 0.2s',
@@ -44,8 +44,8 @@ export const SensorCard: React.FC<SensorCardProps> = ({
           (e.currentTarget as HTMLElement).style.background = '#131320';
         }}
         onMouseLeave={(e) => {
-          (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.06)';
-          (e.currentTarget as HTMLElement).style.background = '#0f0f16';
+          (e.currentTarget as HTMLElement).style.borderColor = 'rgba(231,229,223,0.08)';
+          (e.currentTarget as HTMLElement).style.background = '#202327';
         }}
       >
         {/* Corner accent */}
@@ -84,15 +84,15 @@ export const SensorCard: React.FC<SensorCardProps> = ({
               padding: '2px 0',
               borderBottom: i < fields.length - 1 ? '1px solid rgba(255,255,255,0.03)' : 'none',
             }}>
-              <span style={{ fontFamily: 'Inter', fontSize: 10, color: '#5a5a72' }}>{f.label}</span>
+              <span style={{ fontFamily: 'Inter', fontSize: 10, color: '#73787D' }}>{f.label}</span>
               <span style={{
                 fontFamily: 'JetBrains Mono',
                 fontSize: 11,
-                color: f.highlight ? accent : '#9090a8',
+                color: f.highlight ? accent : '#92979D',
                 fontWeight: f.highlight ? 600 : 400,
               }}>
                 {typeof f.value === 'number' ? f.value : f.value}
-                {f.unit && <span style={{ fontSize: 9, color: '#5a5a72' }}> {f.unit}</span>}
+                {f.unit && <span style={{ fontSize: 9, color: '#73787D' }}> {f.unit}</span>}
               </span>
             </div>
           ))}
@@ -122,7 +122,7 @@ export const SensorCard: React.FC<SensorCardProps> = ({
         >
           <div
             style={{
-              background: '#111118',
+              background: '#181A1D',
               border: `1px solid ${accent}30`,
               width: 360,
               maxHeight: '80vh',
@@ -134,7 +134,7 @@ export const SensorCard: React.FC<SensorCardProps> = ({
             {/* Modal header */}
             <div style={{
               padding: '12px 16px',
-              borderBottom: '1px solid rgba(255,255,255,0.06)',
+              borderBottom: '1px solid rgba(231,229,223,0.08)',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
@@ -143,13 +143,13 @@ export const SensorCard: React.FC<SensorCardProps> = ({
                 <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: accent, fontWeight: 700, letterSpacing: '0.1em' }}>
                   {title}
                 </div>
-                <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#5a5a72', marginTop: 2 }}>SENSOR DETAIL VIEW</div>
+                <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#73787D', marginTop: 2 }}>SENSOR DETAIL VIEW</div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <StatusIndicator status={status} size="sm" />
                 <button
                   onClick={() => setExpanded(false)}
-                  style={{ background: 'none', border: 'none', color: '#5a5a72', cursor: 'pointer', padding: 4 }}
+                  style={{ background: 'none', border: 'none', color: '#73787D', cursor: 'pointer', padding: 4 }}
                 >
                   <X size={14} />
                 </button>
@@ -166,14 +166,14 @@ export const SensorCard: React.FC<SensorCardProps> = ({
                   padding: '6px 0',
                   borderBottom: '1px solid rgba(255,255,255,0.04)',
                 }}>
-                  <span style={{ fontFamily: 'Inter', fontSize: 11, color: '#6a6a82' }}>{f.label}</span>
+                  <span style={{ fontFamily: 'Inter', fontSize: 11, color: '#7B8085' }}>{f.label}</span>
                   <span style={{
                     fontFamily: 'JetBrains Mono',
                     fontSize: 12,
                     color: f.highlight ? accent : '#b0b0c8',
                     fontWeight: f.highlight ? 600 : 400,
                   }}>
-                    {f.value}{f.unit && <span style={{ fontSize: 10, color: '#5a5a72' }}> {f.unit}</span>}
+                    {f.value}{f.unit && <span style={{ fontSize: 10, color: '#73787D' }}> {f.unit}</span>}
                   </span>
                 </div>
               ))}

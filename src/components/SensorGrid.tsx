@@ -12,7 +12,7 @@ export const SensorGrid: React.FC = () => {
       title: 'GPS MODULE',
       icon: <Satellite size={11} />,
       status: gps.status,
-      accent: '#4a9eff',
+      accent: '#6F8792',
       fields: [
         { label: 'Latitude', value: gps.latitude.toFixed(6) + '°', highlight: true },
         { label: 'Longitude', value: gps.longitude.toFixed(6) + '°', highlight: true },
@@ -36,7 +36,7 @@ export const SensorGrid: React.FC = () => {
       title: 'HALL SENSOR',
       icon: <Activity size={11} />,
       status: wheel.status,
-      accent: '#00e5ff',
+      accent: '#D59A32',
       fields: [
         { label: 'Wheel RPM', value: wheel.rpm.toFixed(0), highlight: true, unit: 'RPM' },
         { label: 'Wheel Speed', value: `${wheel.speed.toFixed(1)} km/h` },
@@ -57,7 +57,7 @@ export const SensorGrid: React.FC = () => {
       title: 'LINEAR POT.',
       icon: <Gauge size={11} />,
       status: potentiometer.status,
-      accent: '#00b8d4',
+      accent: '#B07E2A',
       fields: [
         { label: 'F. Travel', value: `${potentiometer.frontTravelPercent.toFixed(1)}%`, highlight: true },
         { label: 'F. Position', value: `${potentiometer.frontPosition.toFixed(1)} mm` },
@@ -109,8 +109,8 @@ export const SensorGrid: React.FC = () => {
 
   return (
     <div style={{
-      background: '#111118',
-      border: '1px solid rgba(255,255,255,0.06)',
+      background: '#181A1D',
+      border: '1px solid rgba(231,229,223,0.08)',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
@@ -119,7 +119,7 @@ export const SensorGrid: React.FC = () => {
       {/* Header */}
       <div style={{
         padding: '8px 12px',
-        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        borderBottom: '1px solid rgba(231,229,223,0.07)',
         flexShrink: 0,
       }}>
         <span className="section-header">LIVE SENSOR TELEMETRY</span>

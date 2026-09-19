@@ -2,72 +2,27 @@ import React from 'react';
 
 export const SystemFlowIndicator: React.FC = () => {
   const steps = [
-    { label: 'SENSORS', sub: 'GPS · IMU · HALL · POT', color: '#4a9eff' },
-    { label: 'ROAD INTELLIGENCE', sub: 'Data fusion & analysis', color: '#00e5ff' },
-    { label: 'PREDICTION', sub: 'AI road disturbance model', color: '#00e5ff' },
-    { label: 'SUSPENSION CTRL', sub: 'Servo actuation', color: '#00e676' },
+    { label: 'SENSORS', sub: 'GPS · IMU · HALL · POT', color: '#6F8792' },
+    { label: 'FUSION', sub: 'Signal conditioning', color: '#D59A32' },
+    { label: 'ROAD MODEL', sub: 'Surface assessment', color: '#D59A32' },
+    { label: 'PREDICTION', sub: 'Disturbance model', color: '#D59A32' },
+    { label: 'SUSPENSION', sub: 'Servo actuation', color: '#718B5A' },
   ];
 
   return (
-    <div style={{ padding: '12px 10px' }}>
-      <div className="data-label mb-3" style={{ textAlign: 'center' }}>SYSTEM PIPELINE</div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <div style={{ padding: '10px 20px 4px', maxWidth: 1920, margin: '0 auto' }}>
+      <div className="data-label" style={{ marginBottom: 7 }}>SYSTEM PIPELINE</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 0, overflowX: 'auto', paddingBottom: 7 }}>
         {steps.map((step, i) => (
           <React.Fragment key={step.label}>
-            <div style={{
-              padding: '6px 10px',
-              border: `1px solid ${step.color}20`,
-              background: `${step.color}08`,
-              position: 'relative',
-            }}>
-              <div style={{
-                fontFamily: 'JetBrains Mono, monospace',
-                fontSize: 9,
-                fontWeight: 700,
-                letterSpacing: '0.1em',
-                color: step.color,
-                marginBottom: 1,
-              }}>
-                {step.label}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0, whiteSpace: 'nowrap' }}>
+              <div style={{ width: 7, height: 7, background: step.color, borderRadius: '50%', flexShrink: 0 }} />
+              <div>
+                <div style={{ font: '700 10px/1.2 var(--mono)', letterSpacing: '.08em', color: step.color }}>{step.label}</div>
+                <div style={{ font: '10px/1.2 var(--sans)', color: '#73787D', marginTop: 2 }}>{step.sub}</div>
               </div>
-              <div style={{ fontSize: 9, color: '#5a5a72', fontFamily: 'Inter, sans-serif' }}>
-                {step.sub}
-              </div>
-              {/* Active pulse line */}
-              <div style={{
-                position: 'absolute',
-                left: 0, top: 0, bottom: 0,
-                width: 2,
-                background: step.color,
-                opacity: 0.6,
-                boxShadow: `0 0 6px ${step.color}`,
-              }} />
             </div>
-            {i < steps.length - 1 && (
-              <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 12,
-              }}>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: 1,
-                  animation: 'flow-pulse 1.5s ease-in-out infinite',
-                  animationDelay: `${i * 0.3}s`,
-                }}>
-                  <div style={{ width: 1, height: 4, background: 'rgba(0,229,255,0.4)' }} />
-                  <div style={{
-                    width: 0, height: 0,
-                    borderLeft: '3px solid transparent',
-                    borderRight: '3px solid transparent',
-                    borderTop: '4px solid rgba(0,229,255,0.4)',
-                  }} />
-                </div>
-              </div>
-            )}
+            {i < steps.length - 1 && <div style={{ width: 'clamp(24px, 5vw, 110px)', height: 1, background: '#30343A', margin: '0 12px', position: 'relative', flexShrink: 0 }}><span style={{ position: 'absolute', right: 0, top: -2, width: 0, height: 0, borderTop: '3px solid transparent', borderBottom: '3px solid transparent', borderLeft: '4px solid #30343A' }} /></div>}
           </React.Fragment>
         ))}
       </div>

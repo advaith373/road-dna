@@ -21,7 +21,7 @@ const MapCanvas: React.FC<{ lat: number; lng: number; heading: number }> = ({ la
       ctx.clearRect(0, 0, width, height);
 
       // Background
-      ctx.fillStyle = '#09090f';
+      ctx.fillStyle = '#111214';
       ctx.fillRect(0, 0, width, height);
 
       // Grid lines (simulating road network)
@@ -58,7 +58,7 @@ const MapCanvas: React.FC<{ lat: number; lng: number; heading: number }> = ({ la
 
         // Road label colors
         if (r.w > 3) {
-          ctx.strokeStyle = 'rgba(0,229,255,0.06)';
+          ctx.strokeStyle = 'rgba(213,154,50,0.06)';
           ctx.lineWidth = r.w - 2;
           ctx.beginPath();
           ctx.moveTo(r.x1 * width, r.y1 * height);
@@ -72,11 +72,11 @@ const MapCanvas: React.FC<{ lat: number; lng: number; heading: number }> = ({ la
         [0.1, 0.9], [0.3, 0.75], [0.3, 0.5], [0.5, 0.5], [0.5, 0.25], [0.7, 0.25],
       ] as [number, number][];
 
-      ctx.strokeStyle = '#00e5ff';
+      ctx.strokeStyle = '#D59A32';
       ctx.lineWidth = 2;
       ctx.setLineDash([4, 3]);
       ctx.shadowBlur = 4;
-      ctx.shadowColor = '#00e5ff';
+      ctx.shadowColor = '#D59A32';
       ctx.beginPath();
       routePoints.forEach(([rx, ry], i) => {
         if (i === 0) ctx.moveTo(rx * width, ry * height);
@@ -94,13 +94,13 @@ const MapCanvas: React.FC<{ lat: number; lng: number; heading: number }> = ({ la
       // Outer pulse ring
       ctx.beginPath();
       ctx.arc(cx, cy, 10 + pulse * 6, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(0,229,255,${0.15 + pulse * 0.1})`;
+      ctx.strokeStyle = `rgba(213,154,50,${0.15 + pulse * 0.1})`;
       ctx.lineWidth = 1;
       ctx.stroke();
 
       ctx.beginPath();
       ctx.arc(cx, cy, 6, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(0,229,255,0.4)';
+      ctx.strokeStyle = 'rgba(213,154,50,0.4)';
       ctx.lineWidth = 1;
       ctx.stroke();
 
@@ -109,9 +109,9 @@ const MapCanvas: React.FC<{ lat: number; lng: number; heading: number }> = ({ la
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(headRad);
-      ctx.fillStyle = '#00e5ff';
+      ctx.fillStyle = '#D59A32';
       ctx.shadowBlur = 8;
-      ctx.shadowColor = '#00e5ff';
+      ctx.shadowColor = '#D59A32';
       ctx.beginPath();
       ctx.moveTo(0, -8);
       ctx.lineTo(-4, 4);
@@ -149,8 +149,8 @@ export const GPSPanel: React.FC = () => {
 
   return (
     <div style={{
-      background: '#111118',
-      border: '1px solid rgba(255,255,255,0.06)',
+      background: '#181A1D',
+      border: '1px solid rgba(231,229,223,0.08)',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
@@ -159,19 +159,19 @@ export const GPSPanel: React.FC = () => {
       {/* Header */}
       <div style={{
         padding: '8px 12px',
-        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        borderBottom: '1px solid rgba(231,229,223,0.07)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexShrink: 0,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <MapPin size={11} color="#4a9eff" />
+          <MapPin size={11} color="#6F8792" />
           <span className="section-header">GPS / ROUTE</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <div style={{ width: 5, height: 5, background: '#00e676', borderRadius: '50%', boxShadow: '0 0 4px #00e676', animation: 'status-pulse 1.5s ease-in-out infinite' }} />
-          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#00e676' }}>{gps.fixType} FIX</span>
+          <div style={{ width: 5, height: 5, background: '#718B5A', borderRadius: '50%', boxShadow: '0 0 4px #718B5A', animation: 'status-pulse 1.5s ease-in-out infinite' }} />
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#718B5A' }}>{gps.fixType} FIX</span>
         </div>
       </div>
 
@@ -204,7 +204,7 @@ export const GPSPanel: React.FC = () => {
         }}>
           <Navigation
             size={14}
-            color="#00e5ff"
+            color="#D59A32"
             style={{ transform: `rotate(${gps.heading}deg)`, transition: 'transform 0.5s ease' }}
           />
         </div>
@@ -213,7 +213,7 @@ export const GPSPanel: React.FC = () => {
       {/* Coordinate data */}
       <div style={{
         padding: '8px 12px',
-        borderTop: '1px solid rgba(255,255,255,0.05)',
+        borderTop: '1px solid rgba(231,229,223,0.07)',
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
         gap: '4px 12px',
@@ -226,8 +226,8 @@ export const GPSPanel: React.FC = () => {
           { label: 'HEADING', value: formatHeading(gps.heading) },
         ].map((item) => (
           <div key={item.label}>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#5a5a72', letterSpacing: '0.08em' }}>{item.label}</div>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#9090a8', fontWeight: 500 }}>{item.value}</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#73787D', letterSpacing: '0.08em' }}>{item.label}</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#92979D', fontWeight: 500 }}>{item.value}</div>
           </div>
         ))}
       </div>
