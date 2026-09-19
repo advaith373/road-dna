@@ -1,5 +1,5 @@
-import React from 'react';
-import { Header } from './Header';
+import React, { useEffect, useState } from 'react';
+import { Header, type LayoutMode } from './Header';
 import { SystemFlowIndicator } from './SystemFlowIndicator';
 import { RoadPreview } from './RoadPreview';
 import { PredictionPanel } from './PredictionPanel';
@@ -11,107 +11,46 @@ import { TelemetryCharts } from './TelemetryCharts';
 import { SystemLog } from './SystemLog';
 
 export const Dashboard: React.FC = () => {
-  return (
-    <div style={{
-      minHeight: '100vh',
-      background: '#101214',
-      color: '#E8E5DE',
-      display: 'flex',
-      flexDirection: 'column',
-      fontFamily: 'Inter, system-ui, sans-serif',
-    }}>
-      {/* Top Engineering Header */}
-      <Header />
+  const [layoutMode, setLayoutMode] = useState<LayoutMode>(() => {
+    if (typeof window === 'undefined') return 'auto';
+    const saved = window.localStorage.getItem('roaddna-layout-mode');
+    return saved === 'pc' || saved === 'mobile' ? saved : 'auto';
+  });
 
-      {/* System Data Flow Pipeline Indicator */}
+  useEffect(() => {
+    window.localStorage.setItem('roaddna-layout-mode', layoutMode);
+  }, [layoutMode]);
+
+  return (
+    <div className="dashboard-shell" data-layout-mode={layoutMode}>
+      <Header layoutMode={layoutMode} onLayoutModeChange={setLayoutMode} />
       <SystemFlowIndicator />
 
-      {/* Main Dashboard Workspace */}
-      <main style={{
-        flex: 1,
-        padding: '12px 16px 24px 16px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 12,
-        maxWidth: 1920,
-        width: '100%',
-        margin: '0 auto',
-      }}>
-        {/* Row 1: 3D Road Surface Visualization + AI Prediction Panel */}
-        <section style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-          gap: 12,
-          minHeight: 320,
-        }}>
-          <div style={{ minHeight: 320, height: '100%' }}>
-            <RoadPreview />
-          </div>
-          <div style={{ minHeight: 320, height: '100%' }}>
-            <PredictionPanel />
-          </div>
+      <main className="dashboard-main">
+        <section className="workspace-grid primary-row dashboard-section" aria-label="Road intelligence">
+          <div className="panel road-preview-card"><RoadPreview /></div>
+          <div className="panel prediction-card"><PredictionPanel /></div>
         </section>
 
-        {/* Row 2: Suspension Telemetry & Actuation, Road Condition, and GPS/Route */}
-        <section style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 12,
-        }}>
-          <div style={{ minHeight: 270 }}>
-            <SuspensionPanel />
-          </div>
-          <div style={{ minHeight: 270 }}>
-            <RoadConditionPanel />
-          </div>
-          <div style={{ minHeight: 270 }}>
-            <GPSPanel />
-          </div>
+        <section className="workspace-grid secondary-row dashboard-section" style={{ marginTop: 14 }} aria-label="Vehicle systems">
+          <div className="panel suspension-card"><SuspensionPanel /></div>
+          <div className="panel condition-card"><RoadConditionPanel /></div>
+          <div className="panel gps-card"><GPSPanel /></div>
         </section>
 
-        {/* Row 3: Hardware Sensor Telemetry Grid */}
-        <section>
+        <section className="dashboard-section sensors-card" style={{ marginTop: 14 }} aria-label="Sensors">
           <SensorGrid />
         </section>
 
-        {/* Row 4: Live Telemetry Line/Area Charts + RTOS System Event Console */}
-        <section style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))',
-          gap: 12,
-          minHeight: 260,
-        }}>
-          <div style={{ minHeight: 260 }}>
-            <TelemetryCharts />
-          </div>
-          <div style={{ minHeight: 260 }}>
-            <SystemLog />
-          </div>
+        <section className="workspace-grid lower-row dashboard-section" style={{ marginTop: 14 }} aria-label="Telemetry and diagnostic log">
+          <div className="panel telemetry-card"><TelemetryCharts /></div>
+          <div className="panel log-card"><SystemLog /></div>
         </section>
       </main>
 
-      {/* Footer Branding & Hardware Specs */}
-      <footer style={{
-        padding: '8px 16px',
-        borderTop: '1px solid #30363B',
-        background: '#181B1E',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: 8,
-        fontFamily: 'JetBrains Mono',
-        fontSize: 9,
-        color: '#92989D',
-      }}>
-        <div>
-          <span>ROADDNA HARDWARE PROTOTYPE TARGET: </span>
-          <span style={{ color: '#D99A2B' }}>Raspberry Pi 3B (1GB)</span>
-          <span> | NEO-6M GPS | HALL-EFFECT | POTENTIOMETER | IMU 6-DOF | SERVO ACTUATION</span>
-        </div>
-        <div>
-          <span>INDUSTRIAL MOTORSPORT TELEMETRY // BUILD 2026.09</span>
-        </div>
+      <footer className="dashboard-footer">
+        <div>ROADDNA HARDWARE PROTOTYPE · Raspberry Pi 3B · NEO-6M GPS · HALL EFFECT · IMU 6-DOF</div>
+        <div>INDUSTRIAL MOTORSPORT TELEMETRY · BUILD 2026.09</div>
       </footer>
     </div>
   );

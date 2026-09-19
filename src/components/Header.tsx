@@ -5,7 +5,14 @@ import { StatusIndicator } from './StatusIndicator';
 import { Settings, Satellite, Cpu, Radio, Sun, Moon } from 'lucide-react';
 import { formatUptime } from '../utils/formatters';
 
-export const Header: React.FC = () => {
+export type LayoutMode = 'auto' | 'pc' | 'mobile';
+
+interface HeaderProps {
+  layoutMode: LayoutMode;
+  onLayoutModeChange: (mode: LayoutMode) => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ layoutMode, onLayoutModeChange }) => {
   const [time, setTime] = useState('');
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     if (typeof window === 'undefined') return 'dark';
@@ -127,6 +134,22 @@ export const Header: React.FC = () => {
 
       {/* Spacer */}
       <div style={{ flex: 1 }} />
+
+      {/* Layout configuration */}
+      <div className="layout-switcher" aria-label="Layout configuration">
+        <span className="layout-switcher-label">VIEW</span>
+        {(['auto', 'pc', 'mobile'] as const).map((mode) => (
+          <button
+            key={mode}
+            className={`layout-mode-button${layoutMode === mode ? ' is-active' : ''}`}
+            aria-pressed={layoutMode === mode}
+            onClick={() => onLayoutModeChange(mode)}
+            title={`${mode === 'auto' ? 'Responsive' : mode === 'pc' ? 'PC workstation' : 'Phone'} layout`}
+          >
+            {mode === 'auto' ? 'AUTO' : mode === 'pc' ? 'PC' : 'MOBILE'}
+          </button>
+        ))}
+      </div>
 
       {/* Data Source Toggle */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginRight: 16, flexShrink: 0 }}>
