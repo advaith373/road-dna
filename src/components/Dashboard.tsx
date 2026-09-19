@@ -23,54 +23,27 @@ export const Dashboard: React.FC = () => {
       {/* Top Engineering Header */}
       <Header />
 
-      {/* System Data Flow Pipeline Indicator */}
-      <SystemFlowIndicator />
+    <main className="dashboard-main">
+      <section className="workspace-grid primary-row dashboard-section" aria-label="Road intelligence">
+        <div className="panel"><RoadPreview /></div>
+        <div className="panel"><PredictionPanel /></div>
+      </section>
 
-      {/* Main Dashboard Workspace */}
-      <main style={{
-        flex: 1,
-        padding: '12px 16px 24px 16px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 12,
-        maxWidth: 1920,
-        width: '100%',
-        margin: '0 auto',
-      }}>
-        {/* Row 1: 3D Road Surface Visualization + AI Prediction Panel */}
-        <section style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-          gap: 12,
-          minHeight: 320,
-        }}>
-          {/* 3D Road Profile Visualizer */}
-          <div style={{ minHeight: 320, height: '100%' }}>
-            <RoadPreview />
-          </div>
+      <section className="workspace-grid secondary-row dashboard-section" aria-label="Vehicle systems" style={{ marginTop: 14 }}>
+        <div className="panel"><SuspensionPanel /></div>
+        <div className="panel"><RoadConditionPanel /></div>
+        <div className="panel"><GPSPanel /></div>
+      </section>
 
-          {/* AI Road Intelligence & Predictive Mitigation Panel */}
-          <div style={{ minHeight: 320, height: '100%' }}>
-            <PredictionPanel />
-          </div>
-        </section>
+      <section className="dashboard-section" style={{ marginTop: 14 }} aria-label="Sensors">
+        <SensorGrid />
+      </section>
 
-        {/* Row 2: Suspension Telemetry & Actuation, Road Condition, and GPS/Route */}
-        <section style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 12,
-        }}>
-          <div style={{ minHeight: 270 }}>
-            <SuspensionPanel />
-          </div>
-          <div style={{ minHeight: 270 }}>
-            <RoadConditionPanel />
-          </div>
-          <div style={{ minHeight: 270 }}>
-            <GPSPanel />
-          </div>
-        </section>
+      <section className="workspace-grid lower-row dashboard-section" style={{ marginTop: 14 }} aria-label="Telemetry and diagnostic log">
+        <div className="panel"><TelemetryCharts /></div>
+        <div className="panel"><SystemLog /></div>
+      </section>
+    </main>
 
         {/* Row 3: Hardware Sensor Telemetry Grid (NEO-6M, Hall, Potentiometer, IMU) */}
         <section>

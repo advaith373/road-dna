@@ -194,7 +194,7 @@ export const SuspensionPanel: React.FC = () => {
                     left: 0, right: 0,
                     bottom: `${t}%`,
                     height: 1,
-                    background: 'rgba(255,255,255,0.08)',
+                    background: 'rgba(231,229,223,0.11)',
                   }} />
                 ))}
               </div>
