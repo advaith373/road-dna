@@ -34,28 +34,27 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({ current, onChange })
                 fontWeight: 600,
                 letterSpacing: '0.06em',
                 border: active
-                  ? '1px solid #D99A2B'
-                  : '1px solid #30363B',
+                  ? '1px solid var(--amber)'
+                  : '1px solid rgba(231,229,223,0.11)',
                 background: active
-                  ? 'rgba(217, 154, 43, 0.18)'
-                  : '#202428',
-                color: active ? '#D99A2B' : '#92989D',
+                  ? 'rgba(213,154,50,0.12)'
+                  : 'rgba(231,229,223,0.025)',
+                color: active ? 'var(--amber)' : 'var(--text-muted)',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 textAlign: 'center',
-                boxShadow: active ? '0 0 10px rgba(217, 154, 43, 0.2)' : 'none',
-                borderRadius: 2,
+                boxShadow: active ? '0 0 10px rgba(213,154,50,0.15)' : 'none',
               }}
               onMouseEnter={(e) => {
                 if (!active) {
-                  (e.target as HTMLElement).style.borderColor = '#718895';
-                  (e.target as HTMLElement).style.color = '#E8E5DE';
+                  (e.target as HTMLElement).style.borderColor = 'rgba(213,154,50,0.3)';
+                  (e.target as HTMLElement).style.color = 'var(--text-secondary)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (!active) {
-                  (e.target as HTMLElement).style.borderColor = '#30363B';
-                  (e.target as HTMLElement).style.color = '#92989D';
+                  (e.target as HTMLElement).style.borderColor = 'rgba(231,229,223,0.11)';
+                  (e.target as HTMLElement).style.color = 'var(--text-muted)';
                 }
               }}
             >

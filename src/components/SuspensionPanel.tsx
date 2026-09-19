@@ -10,7 +10,7 @@ interface GaugeBarProps {
   unit?: string;
 }
 
-const GaugeBar: React.FC<GaugeBarProps> = ({ label, value, color = '#D99A2B', unit = '%' }) => {
+const GaugeBar: React.FC<GaugeBarProps> = ({ label, value, color = 'var(--amber)', unit = '%' }) => {
   const [displayed, setDisplayed] = useState(value);
   const animRef = useRef<number | undefined>(undefined);
 
@@ -29,22 +29,21 @@ const GaugeBar: React.FC<GaugeBarProps> = ({ label, value, color = '#D99A2B', un
   }, [value]);
 
   const pct = Math.min(100, Math.max(0, displayed));
-  const warningColor = pct > 90 ? '#B84D45' : pct > 80 ? '#C87532' : color;
+  const warningColor = pct > 85 ? 'var(--warning)' : pct > 95 ? 'var(--critical)' : color;
 
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 4 }}>
-        <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#92989D', letterSpacing: '0.08em', fontWeight: 600 }}>
+        <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'var(--text-label)', letterSpacing: '0.08em', fontWeight: 600 }}>
           {label}
         </span>
         <span style={{ fontFamily: 'JetBrains Mono', fontSize: 14, color: warningColor, fontWeight: 700 }}>
-          {pct.toFixed(0)}<span style={{ fontSize: 9, color: '#626970' }}>{unit}</span>
+          {pct.toFixed(0)}<span style={{ fontSize: 9, color: 'var(--text-muted)' }}>{unit}</span>
         </span>
       </div>
       <div style={{
         height: 6,
-        background: '#101214',
-        border: '1px solid #30363B',
+        background: 'rgba(231,229,223,0.07)',
         position: 'relative',
         overflow: 'hidden',
       }}>
@@ -63,7 +62,7 @@ const GaugeBar: React.FC<GaugeBarProps> = ({ label, value, color = '#D99A2B', un
             left: `${t}%`,
             top: 0, bottom: 0,
             width: 1,
-            background: 'rgba(255,255,255,0.08)',
+            background: 'rgba(255,255,255,0.1)',
           }} />
         ))}
       </div>
@@ -84,16 +83,16 @@ const DataRow: React.FC<DataRowProps> = ({ label, value, unit, highlight }) => (
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '3px 0',
-    borderBottom: '1px solid #30363B',
+    borderBottom: '1px solid rgba(255,255,255,0.03)',
   }}>
-    <span style={{ fontFamily: 'Inter', fontSize: 10, color: '#92989D', letterSpacing: '0.04em' }}>{label}</span>
+    <span style={{ fontFamily: 'Inter', fontSize: 10, color: 'var(--text-label)', letterSpacing: '0.04em' }}>{label}</span>
     <span style={{
       fontFamily: 'JetBrains Mono',
       fontSize: 11,
-      color: highlight ? '#D99A2B' : '#E8E5DE',
+      color: highlight ? 'var(--amber)' : 'var(--text-secondary)',
       fontWeight: highlight ? 600 : 400,
     }}>
-      {value}{unit && <span style={{ fontSize: 9, color: '#626970' }}> {unit}</span>}
+      {value}{unit && <span style={{ fontSize: 9, color: 'var(--text-muted)' }}> {unit}</span>}
     </span>
   </div>
 );
@@ -103,8 +102,8 @@ export const SuspensionPanel: React.FC = () => {
 
   return (
     <div style={{
-      background: '#181B1E',
-      border: '1px solid #30363B',
+      background: 'var(--bg-surface)',
+      border: '1px solid rgba(231,229,223,0.08)',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
@@ -113,42 +112,41 @@ export const SuspensionPanel: React.FC = () => {
       {/* Header */}
       <div style={{
         padding: '8px 12px',
-        borderBottom: '1px solid #30363B',
+        borderBottom: '1px solid rgba(231,229,223,0.07)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexShrink: 0,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <Zap size={11} color="#D99A2B" />
+          <Zap size={11} color="var(--amber)" />
           <span className="section-header">SUSPENSION CONTROL</span>
         </div>
         {suspension.autoAdjusting && (
           <div style={{
             display: 'flex', alignItems: 'center', gap: 4,
             padding: '2px 6px',
-            background: 'rgba(217, 154, 43, 0.15)',
-            border: '1px solid rgba(217, 154, 43, 0.35)',
-            borderRadius: 2,
+            background: 'rgba(213,154,50,0.08)',
+            border: '1px solid rgba(213,154,50,0.2)',
           }}>
             <div style={{
               width: 5, height: 5,
-              background: '#D99A2B',
+              background: 'var(--amber)',
               borderRadius: '50%',
               animation: 'status-pulse 0.8s ease-in-out infinite',
             }} />
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#D99A2B', letterSpacing: '0.08em' }}>ADJUSTING</span>
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'var(--amber)', letterSpacing: '0.08em' }}>ADJUSTING</span>
           </div>
         )}
       </div>
 
       <div style={{ flex: 1, overflow: 'auto', padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: 12 }}>
         {/* Front Suspension */}
-        <div style={{ padding: '8px', background: '#202428', border: '1px solid #30363B', borderRadius: 2 }}>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#D99A2B', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 8 }}>
+        <div style={{ padding: '8px', background: 'rgba(231,229,223,0.025)', border: '1px solid rgba(255,255,255,0.04)' }}>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'var(--steel)', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 8 }}>
             FRONT SUSPENSION
           </div>
-          <GaugeBar label="DAMPING" value={suspension.frontDamping} color="#D99A2B" />
+          <GaugeBar label="DAMPING" value={suspension.frontDamping} color="var(--amber)" />
           <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 0 }}>
             <DataRow label="Position" value={suspension.frontPosition.toFixed(1)} unit="mm" />
             <DataRow label="Servo Angle" value={suspension.frontServoAngle.toFixed(1)} unit="°" highlight />
@@ -157,11 +155,11 @@ export const SuspensionPanel: React.FC = () => {
         </div>
 
         {/* Rear Suspension */}
-        <div style={{ padding: '8px', background: '#202428', border: '1px solid #30363B', borderRadius: 2 }}>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#718895', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 8 }}>
+        <div style={{ padding: '8px', background: 'rgba(231,229,223,0.025)', border: '1px solid rgba(255,255,255,0.04)' }}>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'var(--steel)', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 8 }}>
             REAR SUSPENSION
           </div>
-          <GaugeBar label="DAMPING" value={suspension.rearDamping} color="#718895" />
+          <GaugeBar label="DAMPING" value={suspension.rearDamping} color="#B07E2A" />
           <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 0 }}>
             <DataRow label="Position" value={suspension.rearPosition.toFixed(1)} unit="mm" />
             <DataRow label="Servo Angle" value={suspension.rearServoAngle.toFixed(1)} unit="°" highlight />
@@ -172,18 +170,18 @@ export const SuspensionPanel: React.FC = () => {
         {/* Visual dual gauge */}
         <div style={{ display: 'flex', gap: 8, alignItems: 'flex-end' }}>
           {[
-            { label: 'FRONT', value: suspension.frontDamping, color: '#D99A2B' },
-            { label: 'REAR', value: suspension.rearDamping, color: '#718895' },
+            { label: 'FRONT', value: suspension.frontDamping, color: 'var(--amber)' },
+            { label: 'REAR', value: suspension.rearDamping, color: '#B07E2A' },
           ].map((g) => (
             <div key={g.label} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
               <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: g.color }}>{g.value.toFixed(0)}%</span>
-              <div style={{ width: '100%', height: 60, background: '#101214', border: '1px solid #30363B', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ width: '100%', height: 60, background: 'rgba(255,255,255,0.04)', position: 'relative', overflow: 'hidden' }}>
                 <div style={{
                   position: 'absolute',
                   bottom: 0, left: 0, right: 0,
                   height: `${Math.min(100, g.value)}%`,
                   background: g.color,
-                  opacity: 0.8,
+                  opacity: 0.7,
                   boxShadow: `0 0 12px ${g.color}40`,
                   transition: 'height 0.15s ease',
                 }} />
@@ -198,7 +196,7 @@ export const SuspensionPanel: React.FC = () => {
                   }} />
                 ))}
               </div>
-              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#626970', letterSpacing: '0.08em' }}>{g.label}</span>
+              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{g.label}</span>
             </div>
           ))}
         </div>

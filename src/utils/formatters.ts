@@ -1,5 +1,5 @@
 // ============================================================
-// RoadDNA — Utility Formatters (Industrial Motorsport Palette)
+// RoadDNA — Utility Formatters
 // ============================================================
 export function formatLatLng(val: number, decimals = 6): string { return val.toFixed(decimals); }
 export function formatHeading(deg: number): string {
@@ -20,26 +20,16 @@ export function formatAccel(val: number): string { return `${val.toFixed(3)} m/s
 export function formatGyro(val: number): string { return `${val.toFixed(2)} °/s`; }
 export function conditionColor(condition: string): string {
   switch (condition) {
-    case 'smooth': return '#718A61';    // Muted Green
-    case 'rough': return '#C87532';     // Burnt Orange
-    case 'bumpy': return '#D99A2B';     // Racing Amber
-    case 'potholed': return '#B84D45';  // Muted Red
-    case 'hazardous': return '#B84D45'; // Muted Red
-    default: return '#92989D';          // Cool Grey
+    case 'smooth': return 'var(--success)'; case 'rough': return 'var(--warning)'; case 'bumpy': return 'var(--amber)';
+    case 'potholed': case 'hazardous': return 'var(--critical)'; default: return 'var(--text-secondary)';
   }
 }
 export function roughnessColor(roughness: string): string {
   switch (roughness) {
-    case 'smooth': case 'low': return '#718A61'; // Muted Green
-    case 'medium': return '#D99A2B';            // Racing Amber
-    case 'high': return '#C87532';              // Burnt Orange
-    case 'severe': return '#B84D45';            // Muted Red
-    default: return '#92989D';                 // Cool Grey
+    case 'smooth': case 'low': return 'var(--success)'; case 'medium': return 'var(--amber)'; case 'high': return 'var(--warning)';
+    case 'severe': return 'var(--critical)'; default: return 'var(--text-secondary)';
   }
 }
 export function qualityColor(quality: number): string {
-  if (quality >= 80) return '#718A61'; // Muted Green
-  if (quality >= 60) return '#D99A2B'; // Racing Amber
-  if (quality >= 40) return '#C87532'; // Burnt Orange
-  return '#B84D45';                    // Muted Red
+  if (quality >= 80) return 'var(--success)'; if (quality >= 60) return 'var(--amber)'; if (quality >= 40) return 'var(--warning)'; return 'var(--critical)';
 }

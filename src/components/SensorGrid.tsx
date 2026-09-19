@@ -12,7 +12,7 @@ export const SensorGrid: React.FC = () => {
       title: 'GPS MODULE',
       icon: <Satellite size={11} />,
       status: gps.status,
-      accent: '#718895',
+      accent: 'var(--steel)',
       fields: [
         { label: 'Latitude', value: gps.latitude.toFixed(6) + '°', highlight: true },
         { label: 'Longitude', value: gps.longitude.toFixed(6) + '°', highlight: true },
@@ -36,7 +36,7 @@ export const SensorGrid: React.FC = () => {
       title: 'HALL SENSOR',
       icon: <Activity size={11} />,
       status: wheel.status,
-      accent: '#D99A2B',
+      accent: 'var(--amber)',
       fields: [
         { label: 'Wheel RPM', value: wheel.rpm.toFixed(0), highlight: true, unit: 'RPM' },
         { label: 'Wheel Speed', value: `${wheel.speed.toFixed(1)} km/h` },
@@ -57,7 +57,7 @@ export const SensorGrid: React.FC = () => {
       title: 'LINEAR POT.',
       icon: <Gauge size={11} />,
       status: potentiometer.status,
-      accent: '#D99A2B',
+      accent: '#B07E2A',
       fields: [
         { label: 'F. Travel', value: `${potentiometer.frontTravelPercent.toFixed(1)}%`, highlight: true },
         { label: 'F. Position', value: `${potentiometer.frontPosition.toFixed(1)} mm` },
@@ -80,10 +80,10 @@ export const SensorGrid: React.FC = () => {
       ],
     },
     {
-      title: 'IMU 6-DOF',
+      title: 'IMU',
       icon: <Waves size={11} />,
       status: imu.status,
-      accent: '#718895',
+      accent: '#7c4dff',
       fields: [
         { label: 'Pitch', value: `${imu.pitch.toFixed(1)}°`, highlight: true },
         { label: 'Roll', value: `${imu.roll.toFixed(1)}°`, highlight: true },
@@ -109,8 +109,8 @@ export const SensorGrid: React.FC = () => {
 
   return (
     <div style={{
-      background: '#181B1E',
-      border: '1px solid #30363B',
+      background: 'var(--bg-surface)',
+      border: '1px solid rgba(231,229,223,0.08)',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
@@ -119,7 +119,7 @@ export const SensorGrid: React.FC = () => {
       {/* Header */}
       <div style={{
         padding: '8px 12px',
-        borderBottom: '1px solid #30363B',
+        borderBottom: '1px solid rgba(231,229,223,0.07)',
         flexShrink: 0,
       }}>
         <span className="section-header">LIVE SENSOR TELEMETRY</span>
@@ -129,10 +129,10 @@ export const SensorGrid: React.FC = () => {
       <div style={{
         flex: 1,
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-        gap: 8,
-        padding: 8,
-        background: '#101214',
+        gridTemplateColumns: '1fr 1fr',
+        gridTemplateRows: '1fr 1fr',
+        gap: 1,
+        background: 'rgba(255,255,255,0.03)',
         overflow: 'hidden',
         minHeight: 0,
       }}>

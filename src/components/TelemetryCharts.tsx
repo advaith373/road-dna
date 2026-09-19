@@ -19,6 +19,7 @@ export const TelemetryCharts: React.FC = () => {
   const { history, suspension, imu, wheel } = useTelemetry();
   const [activeTab, setActiveTab] = useState<ChartMetric>('all');
 
+  // Format data for recharts (last 30-40 points for fast smooth rendering)
   const chartData = history.slice(-40).map((pt, i) => ({
     index: i,
     time: (pt.time % 60000) / 1000,
@@ -39,8 +40,8 @@ export const TelemetryCharts: React.FC = () => {
 
   return (
     <div style={{
-      background: '#181B1E',
-      border: '1px solid #30363B',
+      background: 'var(--bg-surface)',
+      border: '1px solid rgba(231,229,223,0.08)',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
@@ -50,7 +51,7 @@ export const TelemetryCharts: React.FC = () => {
       {/* Header & Tabs */}
       <div style={{
         padding: '8px 12px',
-        borderBottom: '1px solid #30363B',
+        borderBottom: '1px solid rgba(231,229,223,0.07)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -59,16 +60,16 @@ export const TelemetryCharts: React.FC = () => {
         flexShrink: 0,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <Activity size={12} color="#D99A2B" />
+          <Activity size={12} color="var(--amber)" />
           <span className="section-header">REAL-TIME TELEMETRY TRACE</span>
           <span style={{
             fontFamily: 'JetBrains Mono',
             fontSize: 8,
-            color: '#718A61',
-            background: 'rgba(113,138,97,0.15)',
+            color: 'var(--success)',
+            background: 'rgba(113,139,90,0.1)',
             padding: '1px 5px',
             borderRadius: 2,
-            border: '1px solid rgba(113,138,97,0.3)',
+            border: '1px solid rgba(113,139,90,0.2)',
           }}>
             4 HZ LIVE
           </span>
@@ -85,9 +86,9 @@ export const TelemetryCharts: React.FC = () => {
                 fontSize: 9,
                 letterSpacing: '0.06em',
                 padding: '3px 8px',
-                border: activeTab === tab.id ? '1px solid #D99A2B' : '1px solid #30363B',
-                background: activeTab === tab.id ? 'rgba(217,154,43,0.18)' : '#202428',
-                color: activeTab === tab.id ? '#D99A2B' : '#92989D',
+                border: activeTab === tab.id ? '1px solid var(--amber)' : '1px solid rgba(231,229,223,0.08)',
+                background: activeTab === tab.id ? 'rgba(213,154,50,0.1)' : 'rgba(231,229,223,0.025)',
+                color: activeTab === tab.id ? 'var(--amber)' : 'var(--text-label)',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -112,28 +113,28 @@ export const TelemetryCharts: React.FC = () => {
           gap: 6,
           flexShrink: 0,
         }}>
-          <div style={{ background: '#202428', border: '1px solid #30363B', padding: '4px 8px', borderRadius: 2 }}>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: '#92989D' }}>FRONT TRAVEL</div>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#D99A2B', fontWeight: 600 }}>
-              {suspension.frontPosition.toFixed(1)} <span style={{ fontSize: 8, color: '#626970' }}>mm</span>
+          <div style={{ background: '#0d0d14', border: '1px solid rgba(255,255,255,0.04)', padding: '4px 8px', borderRadius: 2 }}>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: 'var(--text-muted)' }}>FRONT TRAVEL</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--amber)', fontWeight: 600 }}>
+              {suspension.frontPosition.toFixed(1)} <span style={{ fontSize: 8, color: 'var(--text-muted)' }}>mm</span>
             </div>
           </div>
-          <div style={{ background: '#202428', border: '1px solid #30363B', padding: '4px 8px', borderRadius: 2 }}>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: '#92989D' }}>REAR TRAVEL</div>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#718895', fontWeight: 600 }}>
-              {suspension.rearPosition.toFixed(1)} <span style={{ fontSize: 8, color: '#626970' }}>mm</span>
+          <div style={{ background: '#0d0d14', border: '1px solid rgba(255,255,255,0.04)', padding: '4px 8px', borderRadius: 2 }}>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: 'var(--text-muted)' }}>REAR TRAVEL</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--steel)', fontWeight: 600 }}>
+              {suspension.rearPosition.toFixed(1)} <span style={{ fontSize: 8, color: 'var(--text-muted)' }}>mm</span>
             </div>
           </div>
-          <div style={{ background: '#202428', border: '1px solid #30363B', padding: '4px 8px', borderRadius: 2 }}>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: '#92989D' }}>VERT ACCEL (AZ)</div>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: Math.abs(imu.az + 9.81) > 2 ? '#C87532' : '#E8E5DE', fontWeight: 600 }}>
-              {imu.az.toFixed(2)} <span style={{ fontSize: 8, color: '#626970' }}>m/s²</span>
+          <div style={{ background: '#0d0d14', border: '1px solid rgba(255,255,255,0.04)', padding: '4px 8px', borderRadius: 2 }}>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: 'var(--text-muted)' }}>VERT ACCEL (AZ)</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: Math.abs(imu.az + 9.81) > 2 ? 'var(--warning)' : '#a78bfa', fontWeight: 600 }}>
+              {imu.az.toFixed(2)} <span style={{ fontSize: 8, color: 'var(--text-muted)' }}>m/s²</span>
             </div>
           </div>
-          <div style={{ background: '#202428', border: '1px solid #30363B', padding: '4px 8px', borderRadius: 2 }}>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: '#92989D' }}>SPEED</div>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#718A61', fontWeight: 600 }}>
-              {wheel.speed.toFixed(1)} <span style={{ fontSize: 8, color: '#626970' }}>km/h</span>
+          <div style={{ background: '#0d0d14', border: '1px solid rgba(255,255,255,0.04)', padding: '4px 8px', borderRadius: 2 }}>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: 'var(--text-muted)' }}>SPEED</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--success)', fontWeight: 600 }}>
+              {wheel.speed.toFixed(1)} <span style={{ fontSize: 8, color: 'var(--text-muted)' }}>km/h</span>
             </div>
           </div>
         </div>
@@ -145,18 +146,18 @@ export const TelemetryCharts: React.FC = () => {
               <AreaChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="frontGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#D99A2B" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#D99A2B" stopOpacity={0.0} />
+                    <stop offset="5%" stopColor="var(--amber)" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="var(--amber)" stopOpacity={0.0} />
                   </linearGradient>
                   <linearGradient id="rearGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#718895" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#718895" stopOpacity={0.0} />
+                    <stop offset="5%" stopColor="var(--steel)" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="var(--steel)" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="2 4" stroke="#30363B" vertical={false} />
+                <CartesianGrid strokeDasharray="2 4" stroke="rgba(255,255,255,0.04)" vertical={false} />
                 <XAxis dataKey="index" hide />
                 <YAxis
-                  stroke="#626970"
+                  stroke="#3a3a52"
                   fontSize={8}
                   fontFamily="JetBrains Mono"
                   domain={['auto', 'auto']}
@@ -164,12 +165,12 @@ export const TelemetryCharts: React.FC = () => {
                 />
                 <Tooltip
                   contentStyle={{
-                    background: '#202428',
-                    border: '1px solid #D99A2B',
+                    background: '#0d0d14',
+                    border: '1px solid rgba(213,154,50,0.3)',
                     borderRadius: 2,
                     fontSize: 10,
                     fontFamily: 'JetBrains Mono',
-                    color: '#E8E5DE',
+                    color: 'var(--text-primary)',
                   }}
                   itemStyle={{ padding: 1 }}
                 />
@@ -177,7 +178,7 @@ export const TelemetryCharts: React.FC = () => {
                   type="monotone"
                   dataKey="frontSuspension"
                   name="Front Travel (mm)"
-                  stroke="#D99A2B"
+                  stroke="var(--amber)"
                   strokeWidth={1.5}
                   fillOpacity={1}
                   fill="url(#frontGrad)"
@@ -187,7 +188,7 @@ export const TelemetryCharts: React.FC = () => {
                   type="monotone"
                   dataKey="rearSuspension"
                   name="Rear Travel (mm)"
-                  stroke="#718895"
+                  stroke="var(--steel)"
                   strokeWidth={1.5}
                   fillOpacity={1}
                   fill="url(#rearGrad)"
@@ -196,24 +197,23 @@ export const TelemetryCharts: React.FC = () => {
               </AreaChart>
             ) : activeTab === 'dynamics' ? (
               <LineChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="2 4" stroke="#30363B" vertical={false} />
+                <CartesianGrid strokeDasharray="2 4" stroke="rgba(255,255,255,0.04)" vertical={false} />
                 <XAxis dataKey="index" hide />
-                <YAxis stroke="#626970" fontSize={8} fontFamily="JetBrains Mono" domain={['auto', 'auto']} tickLine={false} />
+                <YAxis stroke="#3a3a52" fontSize={8} fontFamily="JetBrains Mono" domain={['auto', 'auto']} tickLine={false} />
                 <Tooltip
                   contentStyle={{
-                    background: '#202428',
-                    border: '1px solid #718895',
+                    background: '#0d0d14',
+                    border: '1px solid rgba(167,139,250,0.3)',
                     borderRadius: 2,
                     fontSize: 10,
                     fontFamily: 'JetBrains Mono',
-                    color: '#E8E5DE',
                   }}
                 />
                 <Line
                   type="monotone"
                   dataKey="ax"
                   name="Accel X (m/s²)"
-                  stroke="#C87532"
+                  stroke="#a78bfa"
                   strokeWidth={1.5}
                   dot={false}
                   isAnimationActive={false}
@@ -222,7 +222,7 @@ export const TelemetryCharts: React.FC = () => {
                   type="monotone"
                   dataKey="speed"
                   name="Speed (km/h)"
-                  stroke="#718A61"
+                  stroke="var(--success)"
                   strokeWidth={1.5}
                   dot={false}
                   isAnimationActive={false}
@@ -230,24 +230,23 @@ export const TelemetryCharts: React.FC = () => {
               </LineChart>
             ) : (
               <LineChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="2 4" stroke="#30363B" vertical={false} />
+                <CartesianGrid strokeDasharray="2 4" stroke="rgba(255,255,255,0.04)" vertical={false} />
                 <XAxis dataKey="index" hide />
-                <YAxis stroke="#626970" fontSize={8} fontFamily="JetBrains Mono" domain={[0, 180]} tickLine={false} />
+                <YAxis stroke="#3a3a52" fontSize={8} fontFamily="JetBrains Mono" domain={[0, 180]} tickLine={false} />
                 <Tooltip
                   contentStyle={{
-                    background: '#202428',
-                    border: '1px solid #D99A2B',
+                    background: '#0d0d14',
+                    border: '1px solid rgba(197,106,53,0.3)',
                     borderRadius: 2,
                     fontSize: 10,
                     fontFamily: 'JetBrains Mono',
-                    color: '#E8E5DE',
                   }}
                 />
                 <Line
                   type="monotone"
                   dataKey="frontServo"
                   name="Front Servo (°)"
-                  stroke="#D99A2B"
+                  stroke="var(--warning)"
                   strokeWidth={1.5}
                   dot={false}
                   isAnimationActive={false}
@@ -256,7 +255,7 @@ export const TelemetryCharts: React.FC = () => {
                   type="monotone"
                   dataKey="rearServo"
                   name="Rear Servo (°)"
-                  stroke="#718895"
+                  stroke="#eab308"
                   strokeWidth={1.5}
                   dot={false}
                   isAnimationActive={false}

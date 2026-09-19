@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTelemetry } from '../data/telemetryStore';
-import { Terminal, ArrowDown, Search } from 'lucide-react';
+import { Terminal, Trash2, ArrowDown, Search, ShieldAlert, Check, Info, Cpu } from 'lucide-react';
 import type { LogEntry } from '../data/types';
 
 export const SystemLog: React.FC = () => {
@@ -10,6 +10,7 @@ export const SystemLog: React.FC = () => {
   const [autoScroll, setAutoScroll] = useState<boolean>(true);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Auto-scroll to bottom when new logs arrive if enabled
   useEffect(() => {
     if (autoScroll && scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -27,23 +28,23 @@ export const SystemLog: React.FC = () => {
   const getLevelBadge = (level: LogEntry['level']) => {
     switch (level) {
       case 'system':
-        return { color: '#D99A2B', bg: 'rgba(217,154,43,0.18)', border: 'rgba(217,154,43,0.35)', label: 'SYS' };
+        return { color: 'var(--amber)', bg: 'rgba(213,154,50,0.12)', border: 'rgba(213,154,50,0.25)', label: 'SYS' };
       case 'success':
-        return { color: '#718A61', bg: 'rgba(113,138,97,0.18)', border: 'rgba(113,138,97,0.35)', label: 'OK ' };
+        return { color: 'var(--success)', bg: 'rgba(113,139,90,0.12)', border: 'rgba(113,139,90,0.25)', label: 'OK ' };
       case 'warning':
-        return { color: '#C87532', bg: 'rgba(200,117,50,0.18)', border: 'rgba(200,117,50,0.35)', label: 'WRN' };
+        return { color: 'var(--warning)', bg: 'rgba(197,106,53,0.12)', border: 'rgba(197,106,53,0.25)', label: 'WRN' };
       case 'error':
-        return { color: '#B84D45', bg: 'rgba(184,77,69,0.18)', border: 'rgba(184,77,69,0.35)', label: 'ERR' };
+        return { color: 'var(--critical)', bg: 'rgba(184,74,66,0.15)', border: 'rgba(184,74,66,0.3)', label: 'ERR' };
       case 'info':
       default:
-        return { color: '#92989D', bg: 'rgba(146,152,157,0.12)', border: 'rgba(146,152,157,0.25)', label: 'INF' };
+        return { color: 'var(--text-secondary)', bg: 'rgba(231,229,223,0.07)', border: 'rgba(231,229,223,0.11)', label: 'INF' };
     }
   };
 
   return (
     <div style={{
-      background: '#181B1E',
-      border: '1px solid #30363B',
+      background: 'var(--bg-console)',
+      border: '1px solid rgba(231,229,223,0.08)',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
@@ -53,8 +54,8 @@ export const SystemLog: React.FC = () => {
       {/* Console Header */}
       <div style={{
         padding: '6px 12px',
-        background: '#202428',
-        borderBottom: '1px solid #30363B',
+        background: '#0d0d14',
+        borderBottom: '1px solid rgba(231,229,223,0.08)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -63,12 +64,12 @@ export const SystemLog: React.FC = () => {
         flexShrink: 0,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <Terminal size={12} color="#D99A2B" />
+          <Terminal size={12} color="var(--amber)" />
           <span className="section-header">SYSTEM EVENT LOG & DIAGNOSTICS</span>
           <span style={{
             fontFamily: 'JetBrains Mono',
             fontSize: 9,
-            color: '#626970',
+            color: 'var(--text-muted)',
           }}>
             [{filteredLogs.length} events]
           </span>
@@ -81,12 +82,12 @@ export const SystemLog: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             gap: 4,
-            background: '#101214',
-            border: '1px solid #30363B',
+            background: 'var(--bg-primary)',
+            border: '1px solid rgba(231,229,223,0.11)',
             padding: '2px 6px',
             borderRadius: 2,
           }}>
-            <Search size={10} color="#92989D" />
+            <Search size={10} color="var(--text-muted)" />
             <input
               type="text"
               placeholder="FILTER LOGS..."
@@ -96,7 +97,7 @@ export const SystemLog: React.FC = () => {
                 background: 'transparent',
                 border: 'none',
                 outline: 'none',
-                color: '#E8E5DE',
+                color: 'var(--text-primary)',
                 fontFamily: 'JetBrains Mono',
                 fontSize: 9,
                 width: 100,
@@ -109,9 +110,9 @@ export const SystemLog: React.FC = () => {
             value={filterLevel}
             onChange={(e) => setFilterLevel(e.target.value)}
             style={{
-              background: '#101214',
-              border: '1px solid #30363B',
-              color: '#D99A2B',
+              background: 'var(--bg-primary)',
+              border: '1px solid rgba(231,229,223,0.11)',
+              color: 'var(--amber)',
               fontFamily: 'JetBrains Mono',
               fontSize: 9,
               padding: '2px 4px',
@@ -133,9 +134,9 @@ export const SystemLog: React.FC = () => {
             onClick={() => setAutoScroll(!autoScroll)}
             title={autoScroll ? 'Auto-scroll enabled' : 'Auto-scroll paused'}
             style={{
-              background: autoScroll ? 'rgba(217,154,43,0.18)' : '#101214',
-              border: autoScroll ? '1px solid #D99A2B' : '1px solid #30363B',
-              color: autoScroll ? '#D99A2B' : '#92989D',
+              background: autoScroll ? 'rgba(213,154,50,0.12)' : 'var(--bg-primary)',
+              border: autoScroll ? '1px solid var(--amber)' : '1px solid rgba(231,229,223,0.11)',
+              color: autoScroll ? 'var(--amber)' : 'var(--text-muted)',
               padding: '2px 6px',
               borderRadius: 2,
               cursor: 'pointer',
@@ -158,7 +159,6 @@ export const SystemLog: React.FC = () => {
         style={{
           flex: 1,
           padding: '8px 12px',
-          background: '#101214',
           overflowY: 'auto',
           fontFamily: 'JetBrains Mono',
           fontSize: 10,
@@ -170,7 +170,7 @@ export const SystemLog: React.FC = () => {
         }}
       >
         {filteredLogs.length === 0 ? (
-          <div style={{ color: '#626970', fontStyle: 'italic', padding: '12px 0', textAlign: 'center' }}>
+          <div style={{ color: '#3a3a52', fontStyle: 'italic', padding: '12px 0', textAlign: 'center' }}>
             NO LOG ENTRIES MATCHING CRITERIA
           </div>
         ) : (
@@ -186,11 +186,11 @@ export const SystemLog: React.FC = () => {
                   padding: '2px 4px',
                   borderRadius: 2,
                   transition: 'background 0.1s ease',
-                  background: entry.level === 'warning' ? 'rgba(200,117,50,0.06)' : entry.level === 'error' ? 'rgba(184,77,69,0.08)' : 'transparent',
+                  background: entry.level === 'warning' ? 'rgba(197,106,53,0.03)' : entry.level === 'error' ? 'rgba(184,74,66,0.05)' : 'transparent',
                 }}
               >
                 {/* Timestamp */}
-                <span style={{ color: '#626970', fontSize: 9, flexShrink: 0 }}>
+                <span style={{ color: 'var(--text-muted)', fontSize: 9, flexShrink: 0 }}>
                   {entry.timestamp}
                 </span>
 
@@ -213,7 +213,7 @@ export const SystemLog: React.FC = () => {
                 {/* Message */}
                 <span
                   style={{
-                    color: entry.level === 'warning' ? '#C87532' : entry.level === 'error' ? '#B84D45' : entry.level === 'system' ? '#D99A2B' : '#E8E5DE',
+                    color: entry.level === 'warning' ? '#ffb74d' : entry.level === 'error' ? '#ff6b6b' : entry.level === 'system' ? 'var(--amber)' : '#c0c0d0',
                     wordBreak: 'break-all',
                     flex: 1,
                   }}
@@ -229,18 +229,18 @@ export const SystemLog: React.FC = () => {
       {/* Terminal Footer Bar */}
       <div style={{
         padding: '4px 12px',
-        background: '#202428',
-        borderTop: '1px solid #30363B',
+        background: 'var(--bg-primary)',
+        borderTop: '1px solid rgba(255,255,255,0.04)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexShrink: 0,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#D99A2B', animation: 'status-pulse 1s infinite' }} />
-          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#92989D' }}>STREAM READY — LOG_BUFFER ACTIVE</span>
+          <div style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--amber)', animation: 'status-pulse 1s infinite' }} />
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#3a3a52' }}>STREAM READY — LOG_BUFFER ACTIVE</span>
         </div>
-        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#626970' }}>
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#3a3a52' }}>
           ROADDNA RTOS KERNEL
         </div>
       </div>

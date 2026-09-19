@@ -2,12 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useTelemetry } from '../data/telemetryStore';
 import { SimulationProvider, WebSocketProvider, switchProvider } from '../data/dataSource';
 import { StatusIndicator } from './StatusIndicator';
-import { Settings, Satellite, Cpu, Radio } from 'lucide-react';
+import { Settings, Satellite, Cpu, Radio, Sun, Moon } from 'lucide-react';
 import { formatUptime } from '../utils/formatters';
 
 export const Header: React.FC = () => {
   const [time, setTime] = useState('');
-  const { system, gps, setDataSource } = useTelemetry();
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window === 'undefined') return 'dark';
+    return window.localStorage.getItem('roaddna-theme') === 'light' ? 'light' : 'dark';
+  });
+  const { system, gps, suspension, setSuspensionMode, setDataSource } = useTelemetry();
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    window.localStorage.setItem('roaddna-theme', theme);
+  }, [theme]);
 
   useEffect(() => {
     const update = () => {
@@ -29,13 +38,14 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header style={{
-      background: '#181B1E',
-      borderBottom: '1px solid #30363B',
+    <header className="dashboard-header" style={{
+      background: 'var(--bg-console)',
+      borderBottom: '1px solid rgba(213,154,50,0.12)',
       padding: '0 20px',
       height: 52,
       display: 'flex',
       alignItems: 'center',
+      gap: 0,
       position: 'sticky',
       top: 0,
       zIndex: 100,
@@ -46,18 +56,16 @@ export const Header: React.FC = () => {
         {/* Logo mark */}
         <div style={{
           width: 28, height: 28,
-          border: '1.5px solid #D99A2B',
+          border: '1.5px solid var(--amber)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           position: 'relative',
-          background: '#202428',
-          borderRadius: 2,
           flexShrink: 0,
         }}>
           <div style={{
             position: 'absolute', inset: 3,
-            background: 'rgba(217, 154, 43, 0.15)',
+            background: 'rgba(213,154,50,0.15)',
           }} />
-          <span style={{ fontFamily: 'JetBrains Mono', fontWeight: 700, fontSize: 11, color: '#D99A2B', position: 'relative' }}>R</span>
+          <span style={{ fontFamily: 'JetBrains Mono', fontWeight: 700, fontSize: 11, color: 'var(--amber)', position: 'relative' }}>R</span>
         </div>
         <div>
           <div style={{
@@ -65,25 +73,25 @@ export const Header: React.FC = () => {
             fontWeight: 700,
             fontSize: 14,
             letterSpacing: '0.15em',
-            color: '#E8E5DE',
+            color: 'var(--text-primary)',
           }}>
-            ROAD<span style={{ color: '#D99A2B' }}>DNA</span>
+            ROAD<span style={{ color: 'var(--amber)' }}>DNA</span>
           </div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#626970', letterSpacing: '0.12em' }}>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
             ROAD INTELLIGENCE v1.0
           </div>
         </div>
       </div>
 
       {/* Separator */}
-      <div style={{ width: 1, height: 32, background: '#30363B', marginRight: 20 }} />
+      <div style={{ width: 1, height: 32, background: 'rgba(231,229,223,0.08)', marginRight: 20 }} />
 
       {/* System Status */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginRight: 20, flexShrink: 0 }}>
         <StatusIndicator status={system.status} size="sm" label={false} />
         <div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#92989D', letterSpacing: '0.08em' }}>SYSTEM</div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#718A61', fontWeight: 600, letterSpacing: '0.1em' }}>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'var(--text-label)', letterSpacing: '0.08em' }}>SYSTEM</div>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--success)', fontWeight: 600, letterSpacing: '0.1em' }}>
             {system.status.toUpperCase()}
           </div>
         </div>
@@ -91,10 +99,10 @@ export const Header: React.FC = () => {
 
       {/* GPS Status */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginRight: 20, flexShrink: 0 }}>
-        <Satellite size={12} color="#718895" />
+        <Satellite size={12} color="var(--steel)" />
         <div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#92989D', letterSpacing: '0.08em' }}>GPS</div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#718895', fontWeight: 600 }}>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'var(--text-label)', letterSpacing: '0.08em' }}>GPS</div>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--steel)', fontWeight: 600 }}>
             {gps.fixType} · {gps.satellites} SAT
           </div>
         </div>
@@ -102,17 +110,17 @@ export const Header: React.FC = () => {
 
       {/* Sensor Status */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginRight: 20, flexShrink: 0 }}>
-        <Cpu size={12} color="#D99A2B" />
+        <Cpu size={12} color="var(--amber)" />
         <div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#92989D', letterSpacing: '0.08em' }}>SENSORS</div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#D99A2B', fontWeight: 600 }}>4/4 ACTIVE</div>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'var(--text-label)', letterSpacing: '0.08em' }}>SENSORS</div>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--amber)', fontWeight: 600 }}>4/4 ACTIVE</div>
         </div>
       </div>
 
       {/* Uptime */}
       <div style={{ flexShrink: 0, marginRight: 20 }}>
-        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#92989D', letterSpacing: '0.08em' }}>UPTIME</div>
-        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#E8E5DE', fontWeight: 500 }}>
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'var(--text-label)', letterSpacing: '0.08em' }}>UPTIME</div>
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--text-secondary)', fontWeight: 500 }}>
           {formatUptime(system.uptime)}
         </div>
       </div>
@@ -122,7 +130,7 @@ export const Header: React.FC = () => {
 
       {/* Data Source Toggle */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginRight: 16, flexShrink: 0 }}>
-        <Radio size={11} color="#92989D" />
+        <Radio size={11} color="var(--text-label)" />
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {(['simulation', 'raspberry-pi'] as const).map((src) => {
             const active = system.dataSource === src;
@@ -132,26 +140,26 @@ export const Header: React.FC = () => {
                 key={src}
                 onClick={() => handleSourceToggle(src)}
                 disabled={isRPi}
-                title={isRPi ? 'Raspberry Pi — WebSocket ready' : 'Simulation mode'}
+                title={isRPi ? 'Raspberry Pi — Coming Soon' : 'Simulation mode'}
                 style={{
-                  padding: '4px 10px',
+                  padding: '3px 8px',
                   fontSize: 9,
                   fontFamily: 'JetBrains Mono, monospace',
                   fontWeight: 600,
                   letterSpacing: '0.08em',
                   border: active
-                    ? '1px solid #D99A2B'
-                    : '1px solid #30363B',
+                    ? '1px solid rgba(213,154,50,0.5)'
+                    : '1px solid rgba(231,229,223,0.11)',
                   background: active
-                    ? 'rgba(217, 154, 43, 0.18)'
-                    : '#202428',
-                  color: active ? '#D99A2B' : isRPi ? '#626970' : '#92989D',
+                    ? 'rgba(213,154,50,0.1)'
+                    : 'rgba(231,229,223,0.025)',
+                  color: active ? 'var(--amber)' : isRPi ? '#3a3a52' : 'var(--text-muted)',
                   cursor: isRPi ? 'not-allowed' : 'pointer',
                   transition: 'all 0.2s',
                   borderRadius: src === 'simulation' ? '2px 0 0 2px' : '0 2px 2px 0',
                 }}
               >
-                {src === 'simulation' ? 'SIMULATION' : 'RASPBERRY PI'}
+                {src === 'simulation' ? 'SIM' : 'RPi'}
               </button>
             );
           })}
@@ -163,7 +171,7 @@ export const Header: React.FC = () => {
         fontFamily: 'JetBrains Mono, monospace',
         fontSize: 14,
         fontWeight: 600,
-        color: '#E8E5DE',
+        color: 'var(--text-primary)',
         letterSpacing: '0.05em',
         marginRight: 16,
         flexShrink: 0,
@@ -173,22 +181,24 @@ export const Header: React.FC = () => {
         {time}
       </div>
 
-      {/* Settings */}
+      {/* Theme + settings */}
+      <button
+        className="theme-toggle"
+        aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        onClick={() => setTheme((current) => current === 'dark' ? 'light' : 'dark')}
+      >
+        {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+      </button>
       <button style={{
-        background: '#202428',
-        border: '1px solid #30363B',
-        color: '#92989D',
-        cursor: 'pointer',
-        padding: 6,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        background: 'none', border: '1px solid rgba(231,229,223,0.11)',
+        color: 'var(--text-muted)', cursor: 'pointer', padding: 6,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
         transition: 'all 0.2s',
-        borderRadius: 2,
         flexShrink: 0,
       }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = '#D99A2B'; (e.currentTarget as HTMLElement).style.color = '#D99A2B'; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = '#30363B'; (e.currentTarget as HTMLElement).style.color = '#92989D'; }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(213,154,50,0.3)'; (e.currentTarget as HTMLElement).style.color = 'var(--amber)'; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(231,229,223,0.11)'; (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)'; }}
       >
         <Settings size={14} />
       </button>
