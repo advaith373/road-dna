@@ -2,70 +2,60 @@ import React from 'react';
 
 export const SystemFlowIndicator: React.FC = () => {
   const steps = [
-    { label: 'SENSORS', sub: 'GPS · IMU · HALL · POT', color: '#4a9eff' },
-    { label: 'ROAD INTELLIGENCE', sub: 'Data fusion & analysis', color: '#00e5ff' },
-    { label: 'PREDICTION', sub: 'AI road disturbance model', color: '#00e5ff' },
-    { label: 'SUSPENSION CTRL', sub: 'Servo actuation', color: '#00e676' },
+    { label: 'SENSORS', sub: 'GPS · IMU · HALL · POT', color: '#718895' },
+    { label: 'ROAD INTELLIGENCE', sub: 'Data fusion & analysis', color: '#D99A2B' },
+    { label: 'PREDICTION', sub: 'AI road disturbance model', color: '#C87532' },
+    { label: 'SUSPENSION CTRL', sub: 'Servo actuation', color: '#718A61' },
   ];
 
   return (
-    <div style={{ padding: '12px 10px' }}>
-      <div className="data-label mb-3" style={{ textAlign: 'center' }}>SYSTEM PIPELINE</div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <div style={{
+      background: '#181B1E',
+      borderBottom: '1px solid #30363B',
+      padding: '8px 20px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexWrap: 'wrap',
+      gap: 8,
+    }}>
+      <div className="section-header" style={{ color: '#92989D' }}>PIPELINE:</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1, justifyContent: 'space-around', flexWrap: 'wrap' }}>
         {steps.map((step, i) => (
           <React.Fragment key={step.label}>
             <div style={{
-              padding: '6px 10px',
-              border: `1px solid ${step.color}20`,
-              background: `${step.color}08`,
-              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '4px 10px',
+              background: '#202428',
+              border: `1px solid #30363B`,
+              borderLeft: `3px solid ${step.color}`,
+              borderRadius: 2,
             }}>
-              <div style={{
-                fontFamily: 'JetBrains Mono, monospace',
-                fontSize: 9,
-                fontWeight: 700,
-                letterSpacing: '0.1em',
-                color: step.color,
-                marginBottom: 1,
-              }}>
-                {step.label}
+              <div>
+                <div style={{
+                  fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: '0.08em',
+                  color: step.color,
+                }}>
+                  {step.label}
+                </div>
+                <div style={{ fontSize: 8, color: '#92989D', fontFamily: 'JetBrains Mono' }}>
+                  {step.sub}
+                </div>
               </div>
-              <div style={{ fontSize: 9, color: '#5a5a72', fontFamily: 'Inter, sans-serif' }}>
-                {step.sub}
-              </div>
-              {/* Active pulse line */}
-              <div style={{
-                position: 'absolute',
-                left: 0, top: 0, bottom: 0,
-                width: 2,
-                background: step.color,
-                opacity: 0.6,
-                boxShadow: `0 0 6px ${step.color}`,
-              }} />
             </div>
             {i < steps.length - 1 && (
               <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 12,
+                color: '#626970',
+                fontFamily: 'JetBrains Mono',
+                fontSize: 12,
+                userSelect: 'none',
               }}>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: 1,
-                  animation: 'flow-pulse 1.5s ease-in-out infinite',
-                  animationDelay: `${i * 0.3}s`,
-                }}>
-                  <div style={{ width: 1, height: 4, background: 'rgba(0,229,255,0.4)' }} />
-                  <div style={{
-                    width: 0, height: 0,
-                    borderLeft: '3px solid transparent',
-                    borderRight: '3px solid transparent',
-                    borderTop: '4px solid rgba(0,229,255,0.4)',
-                  }} />
-                </div>
+                →
               </div>
             )}
           </React.Fragment>

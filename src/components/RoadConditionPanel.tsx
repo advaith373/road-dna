@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTelemetry } from '../data/telemetryStore';
-import { CheckCircle, AlertTriangle, Radio } from 'lucide-react';
+import { CheckCircle, AlertTriangle } from 'lucide-react';
 import { roughnessColor, qualityColor } from '../utils/formatters';
 
 export const RoadConditionPanel: React.FC = () => {
@@ -23,8 +23,8 @@ export const RoadConditionPanel: React.FC = () => {
 
   return (
     <div style={{
-      background: '#111118',
-      border: '1px solid rgba(255,255,255,0.06)',
+      background: '#181B1E',
+      border: '1px solid #30363B',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
@@ -33,7 +33,7 @@ export const RoadConditionPanel: React.FC = () => {
       {/* Header */}
       <div style={{
         padding: '8px 12px',
-        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        borderBottom: '1px solid #30363B',
         flexShrink: 0,
       }}>
         <span className="section-header">ROAD CONDITION</span>
@@ -49,7 +49,7 @@ export const RoadConditionPanel: React.FC = () => {
               <path
                 d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
                 fill="none"
-                stroke="rgba(255,255,255,0.06)"
+                stroke="#30363B"
                 strokeWidth={4}
               />
               {/* Value arc */}
@@ -66,7 +66,7 @@ export const RoadConditionPanel: React.FC = () => {
               <text x={cx} y={cy - 2} textAnchor="middle" fill={qualColor} fontSize={11} fontFamily="JetBrains Mono" fontWeight="700">
                 {Math.round(road.quality)}
               </text>
-              <text x={cx} y={cy + 10} textAnchor="middle" fill="#5a5a72" fontSize={7} fontFamily="JetBrains Mono">
+              <text x={cx} y={cy + 10} textAnchor="middle" fill="#92989D" fontSize={7} fontFamily="JetBrains Mono">
                 /100
               </text>
             </svg>
@@ -74,13 +74,13 @@ export const RoadConditionPanel: React.FC = () => {
 
           <div style={{ flex: 1 }}>
             <div style={{ marginBottom: 6 }}>
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#5a5a72', letterSpacing: '0.08em', marginBottom: 2 }}>SURFACE</div>
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#e0e0e8', fontWeight: 600, letterSpacing: '0.06em' }}>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#92989D', letterSpacing: '0.08em', marginBottom: 2 }}>SURFACE</div>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#E8E5DE', fontWeight: 600, letterSpacing: '0.06em' }}>
                 {road.surface.toUpperCase()}
               </div>
             </div>
             <div>
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#5a5a72', letterSpacing: '0.08em', marginBottom: 2 }}>ROUGHNESS</div>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#92989D', letterSpacing: '0.08em', marginBottom: 2 }}>ROUGHNESS</div>
               <div style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: roughColor, fontWeight: 600, letterSpacing: '0.06em' }}>
                 {road.roughness.toUpperCase()}
               </div>
@@ -91,9 +91,9 @@ export const RoadConditionPanel: React.FC = () => {
         {/* Roughness bar */}
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#5a5a72', letterSpacing: '0.08em' }}>ROAD ROUGHNESS INDEX</span>
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#92989D', letterSpacing: '0.08em' }}>ROAD ROUGHNESS INDEX</span>
           </div>
-          <div style={{ height: 4, background: 'rgba(255,255,255,0.05)' }}>
+          <div style={{ height: 4, background: '#101214', border: '1px solid #30363B' }}>
             <div style={{
               height: '100%',
               width: `${['smooth', 'low', 'medium', 'high', 'severe'].indexOf(road.roughness) / 4 * 100}%`,
@@ -103,14 +103,14 @@ export const RoadConditionPanel: React.FC = () => {
             }} />
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: '#3a3a52' }}>SMOOTH</span>
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: '#3a3a52' }}>SEVERE</span>
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: '#626970' }}>SMOOTH</span>
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: '#626970' }}>SEVERE</span>
           </div>
         </div>
 
         {/* Detected features */}
         <div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#5a5a72', letterSpacing: '0.08em', marginBottom: 6 }}>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#92989D', letterSpacing: '0.08em', marginBottom: 6 }}>
             DETECTED FEATURES
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -119,20 +119,21 @@ export const RoadConditionPanel: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 6,
-                padding: '3px 6px',
-                background: f.type === 'pothole' ? 'rgba(255,61,61,0.06)' : 'rgba(255,255,255,0.02)',
-                border: `1px solid ${f.type === 'pothole' ? 'rgba(255,61,61,0.15)' : 'rgba(255,255,255,0.04)'}`,
+                padding: '4px 8px',
+                background: f.type === 'pothole' ? 'rgba(184,77,69,0.12)' : '#202428',
+                border: `1px solid ${f.type === 'pothole' ? 'rgba(184,77,69,0.35)' : '#30363B'}`,
+                borderRadius: 2,
               }}>
                 {f.type === 'pothole' ? (
-                  <AlertTriangle size={10} color="#ff9800" />
+                  <AlertTriangle size={10} color="#C87532" />
                 ) : (
-                  <CheckCircle size={10} color="#00e676" />
+                  <CheckCircle size={10} color="#718A61" />
                 )}
-                <span style={{ fontFamily: 'Inter', fontSize: 10, color: f.type === 'pothole' ? '#ff9800' : '#6a6a82', flex: 1 }}>
+                <span style={{ fontFamily: 'Inter', fontSize: 10, color: f.type === 'pothole' ? '#C87532' : '#92989D', flex: 1 }}>
                   {f.label}
                 </span>
                 {f.distance > 0 && (
-                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#5a5a72' }}>
+                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#E8E5DE' }}>
                     {f.distance.toFixed(1)}m
                   </span>
                 )}

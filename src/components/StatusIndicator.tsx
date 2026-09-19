@@ -8,10 +8,10 @@ interface StatusIndicatorProps {
 }
 
 const STATUS_CONFIG = {
-  online: { color: '#00e676', bg: 'rgba(0,230,118,0.12)', label: 'ONLINE' },
-  degraded: { color: '#ff9800', bg: 'rgba(255,152,0,0.12)', label: 'DEGRADED' },
-  warning: { color: '#ff9800', bg: 'rgba(255,152,0,0.12)', label: 'WARNING' },
-  offline: { color: '#ff3d3d', bg: 'rgba(255,61,61,0.12)', label: 'OFFLINE' },
+  online: { color: '#718A61', bg: 'rgba(113,138,97,0.15)', label: 'ONLINE' },
+  degraded: { color: '#C87532', bg: 'rgba(200,117,50,0.15)', label: 'DEGRADED' },
+  warning: { color: '#C87532', bg: 'rgba(200,117,50,0.15)', label: 'WARNING' },
+  offline: { color: '#B84D45', bg: 'rgba(184,77,69,0.15)', label: 'OFFLINE' },
 };
 
 export const StatusIndicator: React.FC<StatusIndicatorProps> = ({ status, label = true, size = 'md' }) => {
@@ -27,7 +27,7 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({ status, label 
           inset: -3,
           borderRadius: '50%',
           background: cfg.color,
-          opacity: 0.2,
+          opacity: 0.25,
           animation: status !== 'offline' ? 'status-pulse 2s ease-in-out infinite' : 'none',
         }} />
         {/* Main dot */}

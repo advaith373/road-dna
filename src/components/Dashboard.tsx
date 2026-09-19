@@ -14,8 +14,8 @@ export const Dashboard: React.FC = () => {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#09090f',
-      color: '#e0e0e8',
+      background: '#101214',
+      color: '#E8E5DE',
       display: 'flex',
       flexDirection: 'column',
       fontFamily: 'Inter, system-ui, sans-serif',
@@ -96,8 +96,8 @@ export const Dashboard: React.FC = () => {
       {/* Footer Branding & Hardware Specs */}
       <footer style={{
         padding: '8px 16px',
-        borderTop: '1px solid rgba(255,255,255,0.05)',
-        background: '#07070c',
+        borderTop: '1px solid #30363B',
+        background: '#181B1E',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -105,15 +105,15 @@ export const Dashboard: React.FC = () => {
         gap: 8,
         fontFamily: 'JetBrains Mono',
         fontSize: 9,
-        color: '#4a4a62',
+        color: '#92989D',
       }}>
         <div>
           <span>ROADDNA HARDWARE PROTOTYPE TARGET: </span>
-          <span style={{ color: '#00e5ff' }}>Raspberry Pi 3B (1GB)</span>
+          <span style={{ color: '#D99A2B' }}>Raspberry Pi 3B (1GB)</span>
           <span> | NEO-6M GPS | HALL-EFFECT | POTENTIOMETER | IMU 6-DOF | SERVO ACTUATION</span>
         </div>
         <div>
-          <span>ENGINEERING TELEMETRY INTERFACE // BUILD 2026.09</span>
+          <span>INDUSTRIAL MOTORSPORT TELEMETRY // BUILD 2026.09</span>
         </div>
       </footer>
     </div>

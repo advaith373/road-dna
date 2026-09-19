@@ -1,5 +1,5 @@
 // ============================================================
-// RoadDNA — Utility Formatters
+// RoadDNA — Utility Formatters (Industrial Motorsport Palette)
 // ============================================================
 
 export function formatLatLng(val: number, decimals = 6): string {
@@ -46,28 +46,28 @@ export function formatGyro(val: number): string {
 
 export function conditionColor(condition: string): string {
   switch (condition) {
-    case 'smooth': return '#00e676';
-    case 'rough': return '#ff9800';
-    case 'bumpy': return '#ffc107';
-    case 'potholed': return '#ff3d3d';
-    case 'hazardous': return '#ff1744';
-    default: return '#9090a8';
+    case 'smooth': return '#718A61';    // Muted Green
+    case 'rough': return '#C87532';     // Burnt Orange
+    case 'bumpy': return '#D99A2B';     // Racing Amber
+    case 'potholed': return '#B84D45';  // Muted Red
+    case 'hazardous': return '#B84D45'; // Muted Red
+    default: return '#92989D';          // Cool Grey
   }
 }
 
 export function roughnessColor(roughness: string): string {
   switch (roughness) {
-    case 'smooth': case 'low': return '#00e676';
-    case 'medium': return '#ffc107';
-    case 'high': return '#ff9800';
-    case 'severe': return '#ff3d3d';
-    default: return '#9090a8';
+    case 'smooth': case 'low': return '#718A61'; // Muted Green
+    case 'medium': return '#D99A2B';            // Racing Amber
+    case 'high': return '#C87532';              // Burnt Orange
+    case 'severe': return '#B84D45';            // Muted Red
+    default: return '#92989D';                 // Cool Grey
   }
 }
 
 export function qualityColor(quality: number): string {
-  if (quality >= 80) return '#00e676';
-  if (quality >= 60) return '#ffc107';
-  if (quality >= 40) return '#ff9800';
-  return '#ff3d3d';
+  if (quality >= 80) return '#718A61'; // Muted Green
+  if (quality >= 60) return '#D99A2B'; // Racing Amber
+  if (quality >= 40) return '#C87532'; // Burnt Orange
+  return '#B84D45';                    // Muted Red
 }
